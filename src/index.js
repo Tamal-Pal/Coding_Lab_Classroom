@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client"
 import { BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer/Footer.js";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+// import Footer from "./components/Footer/Footer.js";
 import PageRoutes from "./PageRoutes.js"
 import './index.css'
 
@@ -12,7 +13,6 @@ root.render(
             <BrowserRouter>
                 <PageRoutes />
             </BrowserRouter>
-            <Footer />
         </React.StrictMode>
     </>
 )
