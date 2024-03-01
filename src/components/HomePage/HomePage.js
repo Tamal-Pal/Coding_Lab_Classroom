@@ -1,56 +1,113 @@
-import React, { useState } from 'react'
-import './HomePage.css'
+import React, { useRef, useState, useEffect, useContext } from 'react'
+import AuthContext from '../../context/AuthProvider';
+import axios from '../../api/axios';
+
+const LOGIN_URL = '/api/auth'
 
 function HomePage() {
 
-  const [email_id, setemail_id] = useState('');
-  const [password, setPassword] = useState('');
+  const { setAuth } = useContext(AuthContext)
 
-  const handleemail_idChange = (e) => {
-    setemail_id(e.target.value)
-  }
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+  const userRef = useRef();
+  const errRef = useRef();
 
-  const handleLogin = async (e) => {
+  const [user, setUser] = useState('')
+  const [pwd, setPwd] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [success, setSuccess] = useState(false)
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, [])
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [user, pwd])
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/validateuser', {
-      method: 'POST',
-      headers: {
-        email_id: email_id,
-        password: password
-      }
-    });
 
-    console.log(await response.json())
+    try {
+
+      const response = await axios.post(LOGIN_URL,
+        JSON.stringify({ user: user, pwd: pwd }),//It can be also written as {user: pwd} coz api is expecting that
+        {
+          header: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
+      );
+
+      console.log(JSON.stringify(response?.data))
+      // console.log(JSON.stringify(response))
+
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+
+      setAuth({ user, pwd, roles, accessToken })
+
+      setUser('');
+      setPwd('');
+
+    } catch (err) {
+      if(!err.response) {
+        setErrMsg('No Server Response');
+      } else if(err.response?.status === 400) {
+        setErrMsg('Missing Username or Password');
+      } else if(err.response?.status === 401) {
+        setErrMsg('Unauthorized')
+      } else {
+        setErrMsg('Login Failed')
+      }
+      errRef.current.focus();
+    }
   }
 
   return (
-    <div id='HomePage' className='text-center'>
-      <form className="form-signin" id="signin-form">
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label htmlFor="inputemail_id" className="sr-only">email_id address</label>
-        <input 
-          type="email" 
-          id="inputemail_id" 
-          className="form-control" 
-          placeholder="email_id address"
-          onChange={handleemail_idChange}
-          required autoFocus />
+    <main className='App'>
+      {success ?
+        (<section>
+          <h1>You are logged in!</h1>
+          <br />
+          <p>
+            <a href='#'>Go to Home</a>
+          </p>
+        </section>) :
+        (<section>
+          <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
+          <h1>Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor=''>Username:</label>
+            <input
+              type='text'
+              id='username'
+              ref={userRef}
+              autoComplete='off'
+              onChange={(e) => { setUser(e.target.value) }}
+              value={user}
+              required
+            />
 
-        <label htmlFor="inputPassword" className="sr-only">Password</label>
-        <input 
-          type="password" 
-          id="inputPassword" 
-          className="form-control" 
-          placeholder="Password"
-          onChange={handlePasswordChange}
-          required />
-        <button className="btn btn-lg btn-primary btn-block" onClick={handleLogin}>Sign in</button>
-      </form>
-      <a href="/signup" className="link-info">Click Here to Sign up</a>
-    </div>
+            <label password=''>Password:</label>
+            <input
+              type='password'
+              id='password'
+              onChange={(e) => { setPwd(e.target.value) }}
+              value={pwd}
+              required
+            />
+
+            <button>Sign In</button>
+          </form>
+          <p>
+            Need an Account?<br />
+            <span className='line'>
+              {/*put router link here */}
+              <a href='/signup'>Sign Up</a>
+            </span>
+          </p>
+        </section>
+        )}
+    </main>
   )
 }
 

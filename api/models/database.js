@@ -16,10 +16,15 @@ const isUser = async (email_id) => {
     else return false;
 };
 
-const newUser = async (email_id, password, full_name, role) => {
+const newUser = async (user, pwd, fullname, role) => {
 
     //checking if every value is received
-    if (!(email_id && password && full_name && role)) return null;
+    if (
+        !(user && pwd && fullname && role) ||
+        user == '' ||
+        pwd == '' ||
+        fullname == ''
+    ) return null;
 
     //Generating User Id
     var user_id;
@@ -28,53 +33,53 @@ const newUser = async (email_id, password, full_name, role) => {
     else { return null; }
 
     //Generating password hash
-    var hashed_password = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT_ROUNDS));
+    var hashed_password = await bcrypt.hash(pwd, Number(process.env.BCRYPT_SALT_ROUNDS));
 
     try {
         const result = await pool.query(
-            'insert into Users (user_id, email_id, password, full_name) values(?, ?, ?, ?);',
-            [user_id, email_id, hashed_password, full_name]
+            'insert into Users (user_id, user, pwd, fullname) values(?, ?, ?, ?);',
+            [user_id, user, hashed_password, fullname]
         );
-        return result;
+        return 'SIGN_UP_SUCCESSFUL';
     } catch (err) {
-        if (err.code == 'ER_DUP_ENTRY') {
-            console.log('user already exists')
-        } else if (err.code == 'ER_PARSE_ERROR') {
-            console.log('error in newUser function in api/database.js, syntax error in pool.query()')
-        } else {
-            console.log('some error in newUser function in api/database.js', err)
-        }
-        return null;
+        throw err
     }
 };
 module.exports.newUser = newUser;
 
 /*
     validateUser:
-    returns 'USER_NOT_FOUND' if no user is found
-    returns 'INCORRECT_PASSWORD' if user is found, but password mismatched
-    returns 'VALID_USER' if email_id and password matches
+    returns {status: 'USER_NOT_FOUND'} if no user is found
+    returns {status: 'INCORRECT_PASSWORD'} if user is found, but password is incorrect
+    returns {
+        status: 'VALID_USER',
+        user_id: user_id,
+        user: user,
+        fullname: fullname
+    } if user and password matches
     returns null if error occurs
 */
-const validateUser = async (email_id, password) => {
+const validateUser = async (user, pwd) => {
     try {
-        const [response] = await pool.query('select * from Users where email_id=?;', [email_id]);
+        const [response] = await pool.query('select * from Users where user=?;', [user]);
         var validationData = {
             status: null,
             user_id: null,
-            email_id: null,
-            full_name: null
+            user: null,
+            fullname: null
         }
         if (response.length == 0) {
-            validationData.status = 'USER_NOT_FOUND'
+            const e = new Error('user not found')
+            e.code = 'USER_NOT_FOUND'
+            throw e
         }
         else {
-            const res = await bcrypt.compare(password, response[0].password)
+            const res = await bcrypt.compare(pwd, response[0].pwd)
             if (res) {
                 validationData.status = 'VALID_USER'
                 validationData.user_id = response[0].user_id
-                validationData.email_id = response[0].email_id
-                validationData.full_name = response[0].full_name
+                validationData.user = response[0].user
+                validationData.fullname = response[0].fullname
             }
             else {
                 validationData.status = 'INCORRECT_PASSWORD';
@@ -83,8 +88,8 @@ const validateUser = async (email_id, password) => {
         return validationData;
     }
     catch (e) {
-        console.log('some error while prompting the database', e);
-        return null;
+        console.log('database.js', e);
+        throw e;
     }
 };
 module.exports.validateUser = validateUser;
