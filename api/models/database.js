@@ -10,6 +10,18 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 }).promise();
 
+// was used for testing the connection to database
+// const test = async () => {
+//     try {
+//         const [res] = await pool.query('select * from test')
+//         console.log(res)
+//     }
+//     catch(e){
+//         console.error(e)
+//     }
+// }
+// test()
+
 const isUser = async (email_id) => {
     [result] = await pool.query('select count(*) as exist from login_test where user_name = ?;', [email_id]);
     if (result[0].exist > 0) return true;

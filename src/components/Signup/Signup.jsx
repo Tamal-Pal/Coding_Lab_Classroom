@@ -119,7 +119,7 @@ function Signup() {
     }
 
     return (
-        <main className='App'>
+        <>
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -189,10 +189,17 @@ function Signup() {
                             Letters, numbers, underscores, hyphens allowed.
                         </p>
 
-                        <label htmlFor='student'>Student</label>
-                        <input type='radio' id='student' name='role' value='student' onChange={handleRole} required />
-                        <label htmlFor='teacher'>Teacher</label>
-                        <input type='radio' id='teacher' name='role' value='teacher' onChange={handleRole} required />
+                        <div className='radio' id='radio-container'>
+
+                            <span className=''>
+                                <label htmlFor='student'>Student&nbsp;</label>
+                                <input type='radio' id='student' name='role' value='student' onChange={handleRole} required />
+                            </span>
+                            <span className=''>
+                                <label htmlFor='teacher'>Teacher&nbsp;</label>
+                                <input type='radio' id='teacher' name='role' value='teacher' onChange={handleRole} required />
+                            </span>
+                        </div>
 
                         <label htmlFor='password'>
                             Password:
@@ -267,7 +274,7 @@ function Signup() {
                 </section>
 
             )}
-        </main>
+        </>
     )
 }
 
