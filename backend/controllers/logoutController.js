@@ -1,6 +1,5 @@
 const fsPromises = require('fs').promises
 const path = require('path')
-var activeUsers = require('../models/activeUsers.json')
 
 // !!Important
 // Logout without verification is possible. That should be removed. Verification before logout is necessary..

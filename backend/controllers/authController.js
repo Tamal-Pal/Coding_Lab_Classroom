@@ -2,13 +2,14 @@ require('dotenv').config()
 
 const database = require('../models/database')
 const jwt = require('jsonwebtoken')
-const fsPromises = require('fs').promises
+// const fsPromises = require('fs').promises
 const path = require('path')
+const Time = require('../config/Time')
 
-var activeUsers = require('../models/activeUsers.json')
+// var activeUsers = require('../models/activeUsers.json')
 
 const handleLogin = async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body, Time())
 
     const { user, pwd } = req.body
     if(!user || !pwd) return res.status(400).json({ 'message': 'email id or user id and password are required'})
@@ -23,32 +24,8 @@ const handleLogin = async (req, res) => {
                 const accessToken = jwt.sign(
                     { user, user_id },
                     process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: '30s' }
-                )
-                const refreshToken = jwt.sign(
-                    { user, user_id },
-                    process.env.REFRESH_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 )
-                const currentUser = { user, user_id, refreshToken }
-                var flag = true;
-                for(var i=0; i<activeUsers.length; i++){
-                    if(activeUsers[i].user === user){
-                        activeUsers[i].refreshToken = refreshToken
-                        flag = false
-                        break
-                    }
-                }
-
-                if(flag) activeUsers = [ ...activeUsers, currentUser ]
-
-                await fsPromises.writeFile(path.join(__dirname, '../models/activeUsers.json'), JSON.stringify(activeUsers))
-                res.cookie('jwt', refreshToken, {
-                    httpOnly: true,
-                    sameSite: 'None',
-                    secure: false,
-                    maxAge: 24 * 60 * 60 * 1000
-                })
                 res.json({ user, user_id, accessToken })
             } else if(response.status === 'INCORRECT_PASSWORD'){
                 res.status(401).json({ 'status': response.status })
