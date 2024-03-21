@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import useAuth from '../../../../hooks/useAuth'
 import { Container } from 'react-bootstrap'
 import RoomCard from './RoomCards'
 
 const RoomViewer = ({ roomRefresh }) => {
 
     const [rooms, setRooms] = useState([])
-
-    const { auth } = useAuth()
 
     useEffect(() => {
         const fetchRooms = async () => {

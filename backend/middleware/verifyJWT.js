@@ -4,7 +4,10 @@ const Time = require('../config/Time')
 
 const verifyJWT = (req, res, next) => {
     const token = req?.cookies?.jwt
-    if(!token) { return res.sendStatus(401) }
+    if(!token) { 
+        res.status(401)
+        res.json({})
+    }
 
     jwt.verify(
         token,

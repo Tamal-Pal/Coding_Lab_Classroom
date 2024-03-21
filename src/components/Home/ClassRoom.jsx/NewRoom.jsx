@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import useAuth from '../../../hooks/useAuth'
 
 const NewRoom = ({ setRoomRefresh }) => {
-
-    const { auth } = useAuth()
 
     const [roomName, setRoomName] = useState('')
 
@@ -13,6 +10,9 @@ const NewRoom = ({ setRoomRefresh }) => {
         await fetch('http://localhost:3001/api/newroom', {
             method: 'POST',
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ "room_name": roomName })
         })
         setRoomRefresh(new Date().getTime())

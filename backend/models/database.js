@@ -135,8 +135,12 @@ module.exports.getTeachersRooms = getTeachersRooms
 
 const getStudentsRooms = async (user_id) => {
     const [result] = await pool.query(
-        `select room_id, room_name from rooms, room_admin
-        where rooms.room_id=room_admin.room_id and rooms.user_id=?`,
+        `select 
+        rooms.room_id as room_id, 
+        room_admin.room_name as room_name 
+        from rooms, room_admin
+        where rooms.room_id=room_admin.room_id 
+        and rooms.user_id=?`,
         [user_id]
     )
     return result

@@ -1,13 +1,22 @@
 import React from 'react'
-import useAuth from '../../hooks/useAuth'
+import JoinRoom from './ClassRoom.jsx/JoinRoom'
+import RoomViewer from './ClassRoom.jsx/RoomViewer/RoomViewer'
+import { Container, Row, Col } from 'react-bootstrap'
 
 function Student() {
-    const { setAuth } = useAuth()
 
     return (
         <>
-            <h1>Logged In As Student</h1>
-            <button onClick={() => setAuth({})}>Log Out</button>
+            <Container>
+                <Row style={{padding: '20px'}}>
+                    <Col>
+                        <JoinRoom/>
+                    </Col>
+                    <Col>
+                        <RoomViewer/>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }

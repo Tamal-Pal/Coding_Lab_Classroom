@@ -11,8 +11,10 @@
 
 .card-body:hover {
     cursor: pointer;
+    background-color: #C6D8D5;
 }
 
 .room-viewer {
     overflow-y: auto;
+    max-height: calc(100vh - nav height);
 }

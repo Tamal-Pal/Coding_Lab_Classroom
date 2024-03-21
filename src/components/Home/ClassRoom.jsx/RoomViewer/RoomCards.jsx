@@ -1,10 +1,13 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const RoomCard = ({ room_name, room_id }) => {
 
+    const navigate = useNavigate()
+
     const enterRoom = async () => {
-        
+        navigate('/qwer')
     }
 
     return (

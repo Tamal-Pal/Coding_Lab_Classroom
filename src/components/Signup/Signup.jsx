@@ -2,13 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Signup.css'
-import axios from '../../api/axios';
+import { BASE_URL, SIGNUP_URL } from '../../config/URL';
 
 const FULLNAME_REGEX = /\S+/
 const USER_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/
-
-const SIGNUP_URL = '/api/signup'
 
 function Signup() {
 
@@ -88,31 +86,26 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post(SIGNUP_URL,
-                JSON.stringify({ fullname: fullname, user: user, role: role, pwd: pwd }), {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
-            }
-            )
-            // console.log('response.data:', response.data);
-            // console.log('response.accessToken:', response.accessToken);
-            // console.log('response:', JSON.stringify(response))
-            // console.log('success')
-            if (response.data === false) {
-                setErrMsg('Username Taken')
-            } else {
+            const response = await fetch(BASE_URL + SIGNUP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullname: fullname, user: user, role: role, pwd: pwd })
+            })
+
+            if(response.status === 200 || response.status === 201){
                 setSuccess(true)
             }
-            // clear input fields
+            else if(response.status === 409){
+                setErrMsg('Username Taken')
+            }
+            else {
+                setErrMsg('Registration Failed')
+            }
         }
         catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
-            }
+            setErrMsg('No Response From Server')
             errRef.current.focus();
         }
     }
@@ -123,7 +116,9 @@ function Signup() {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href='/'>Sign In</a>
+                        <a href='/login'>Sign In</a>
+                        <br />
+                        <a href='/signup'>Sign Up</a>
                     </p>
                 </section>
             ) : (

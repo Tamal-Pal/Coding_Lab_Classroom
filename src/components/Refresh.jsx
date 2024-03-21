@@ -11,14 +11,19 @@ const Refresh = () => {
 
         const refresh = async () => {
             try {
-                const result = await fetch(BASE_URL + REFRESH_URL, {
+                fetch(BASE_URL + REFRESH_URL, {
                     credentials: 'include'
-                }).then(res => res.json())
-                
-                const { user, user_id, fullname } = result
-                if(user && user_id && fullname) setAuth({ user, user_id, fullname })
+                }).then(async (res) => {
+                    if(res.status === 401){
+                        setAuth({})
+                    } else {
+                        const result = await res.json()
+                        const { user, user_id, fullname } = result
+                        if(user && user_id && fullname) setAuth({ user, user_id, fullname })
+                        else setAuth({})
+                    }
+                })
             } catch(e) {
-                console.log('an error occurred')
                 console.error(e)
             }
         }

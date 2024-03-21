@@ -27,7 +27,12 @@ const Home = () => {
                     <Outlet />
                 </>
             )
-            : (<div className='App'><Link to='/login'>Login</Link></div>)
+            : (
+                <div className='App'>
+                    <Link to='/login'>Login</Link>
+                    <Link to='/signup'>Signup</Link>
+                </div>
+            )
     )
 }
 

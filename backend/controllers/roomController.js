@@ -31,7 +31,6 @@ const getRooms = async (req, res) => {
     } else if(user_id[0] === 'S'){
         // This needs to be tested after creating student page
         const result = await database.getStudentsRooms(user_id)
-        console.log(result)
         res.json(result)
     } else {
         res.sendStatus(422)
