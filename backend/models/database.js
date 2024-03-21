@@ -10,23 +10,12 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 }).promise();
 
-// was used for testing the connection to database
-// const test = async () => {
-//     try {
-//         const [res] = await pool.query('select * from test')
-//         console.log(res)
-//     }
-//     catch(e){
-//         console.error(e)
-//     }
-// }
-// test()
-
 const isUser = async (email_id) => {
     [result] = await pool.query('select count(*) as exist from login_test where user_name = ?;', [email_id]);
     if (result[0].exist > 0) return true;
     else return false;
-};
+}
+module.exports.isUser = isUser
 
 const newUser = async (user, pwd, fullname, role) => {
 
@@ -104,4 +93,45 @@ const validateUser = async (user, pwd) => {
         throw e;
     }
 };
-module.exports.validateUser = validateUser;
+module.exports.validateUser = validateUser
+
+const newRoom = async ({ user_id, room_name }) => {
+    if(!user_id) return false
+
+    if(!room_name) roomDesc = ''
+
+    const room_id = `R${new Date().getTime()}`
+
+    try {
+        const [result] = await pool.query(
+            `insert into room_admin (room_id, admin_id, room_name)
+            values(?, ?, ?);`,
+            [room_id, user_id, room_name]
+        )
+        console.log('yo')
+        return result
+
+    } catch(e) {
+        console.error(e, 'Error occurred while pusing into database')
+
+        return null
+    }
+}
+
+module.exports.newRoom = newRoom
+
+const getTeachersRooms = async (admin_id) => {
+    const [result] = await pool.query('select room_id, room_name from room_admin where admin_id=?;', [admin_id])
+    return result
+}
+module.exports.getTeachersRooms = getTeachersRooms
+
+const getStudentsRooms = async (user_id) => {
+    const [result] = await pool.query(
+        `select room_id, room_name from rooms, room_admin
+        where rooms.room_id=room_admin.room_id and rooms.user_id=?`,
+        [user_id]
+    )
+    return result
+}
+module.exports.getStudentsRooms = getStudentsRooms

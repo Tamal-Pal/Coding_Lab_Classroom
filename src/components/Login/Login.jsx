@@ -32,13 +32,6 @@ function Login() {
     e.preventDefault();
 
     try {
-      // const response = await axios.post(LOGIN_URL,
-      //   { user, pwd },
-      //   {
-      //     header: { 'Content-Type': 'application/json' },
-      //     withCredentials: true
-      //   }
-      // );
 
       const response = await fetch(BASE_URL + LOGIN_URL, {
         method: 'POST',
@@ -46,8 +39,8 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user, pwd })
       })
-      console.log(response)
-      console.log('status', response.status)
+      // console.log(response)
+      // console.log('status', response.status)
 
       if (response.status === 400) {
         setErrMsg('Missing Username or Password')
@@ -85,7 +78,7 @@ function Login() {
   }
 
   return (
-      <>
+      <div className='App'>
         <section>
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
           <h1>Sign In</h1>
@@ -120,7 +113,7 @@ function Login() {
             </span>
           </p>
         </section>
-      </>
+      </div>
     )
   }
 

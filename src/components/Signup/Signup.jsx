@@ -25,7 +25,6 @@ function Signup() {
 
     const [role, setRole] = useState(false);
     const [validRole, setValidRole] = useState(false);
-    const [roleFocus, setRoleFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -99,7 +98,7 @@ function Signup() {
             // console.log('response.accessToken:', response.accessToken);
             // console.log('response:', JSON.stringify(response))
             // console.log('success')
-            if (response.data == false) {
+            if (response.data === false) {
                 setErrMsg('Username Taken')
             } else {
                 setSuccess(true)
@@ -119,7 +118,7 @@ function Signup() {
     }
 
     return (
-        <>
+        <div className='App'>
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -274,7 +273,7 @@ function Signup() {
                 </section>
 
             )}
-        </>
+        </div>
     )
 }
 

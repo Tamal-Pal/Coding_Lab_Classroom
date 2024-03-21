@@ -1,0 +1,18 @@
+.navigation-bar {
+    background-color: #ACE2E1;
+    color: #008DDA;
+}
+
+.card-body {
+    margin-top: 10px solid transparent;
+    border-radius: 0;
+    background-color: #F7EEDD;
+}
+
+.card-body:hover {
+    cursor: pointer;
+}
+
+.room-viewer {
+    overflow-y: auto;
+}

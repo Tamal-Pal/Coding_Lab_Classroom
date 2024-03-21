@@ -9,7 +9,7 @@ const Time = require('../config/Time')
 // var activeUsers = require('../models/activeUsers.json')
 
 const handleLogin = async (req, res) => {
-    console.log(req.body, Time())
+    // console.log(req.body, Time())
 
     const { user, pwd } = req.body
     if(!user || !pwd) return res.status(400).json({ 'message': 'email id or user id and password are required'})
@@ -19,14 +19,13 @@ const handleLogin = async (req, res) => {
         if(response){
             if(response.status === 'VALID_USER'){
                 // create JWTs
-                const { user_id } = response
-                console.log(user, user_id)
+                const { user_id, fullname } = response
                 const accessToken = jwt.sign(
-                    { user, user_id },
+                    { user_id },
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 )
-                res.json({ user, user_id, accessToken })
+                res.json({ user, user_id, fullname, accessToken })
             } else if(response.status === 'INCORRECT_PASSWORD'){
                 res.status(401).json({ 'status': response.status })
             }
