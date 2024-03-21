@@ -12,9 +12,7 @@ const RoomViewer = ({ roomRefresh }) => {
     useEffect(() => {
         const fetchRooms = async () => {
             const result = await fetch('http://localhost:3001/api/getRooms', {
-                headers: {
-                    'Authorization': `Bearer ${auth.accessToken}`
-                }
+                credentials: 'include'
             }).then(res => res.json())
             setRooms(result)
         }

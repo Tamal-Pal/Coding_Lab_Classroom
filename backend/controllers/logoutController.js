@@ -10,25 +10,7 @@ const handleLogout = async (req, res) => {
     const cookies = req.cookies
     if(!cookies?.jwt) return res.sendStatus(204)    // No Content
 
-    const refreshToken = cookies.jwt
-    // Is refreshToken in db?
-    const foundUser = activeUsers.find(person => person.refreshToken === refreshToken)
-    if(!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: false });
-        return res.sendStatus(204)
-    }
-
-    // Delete refreshToken in db
-
-    for(var i=0; i<activeUsers.length; i++){
-        if(activeUsers[i].user === foundUser.user){
-            activeUsers.splice(i, 1);
-            break
-        }
-    }
-    await fsPromises.writeFile(path.join(__dirname, '..', 'models', 'activeUsers.json'), JSON.stringify(activeUsers))
-    
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: false })  // secure: true - only serves on https
+    res.clearCookie('jwt', { httpOnly: true, secure: true })
     res.sendStatus(204)
 }
 

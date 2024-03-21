@@ -12,10 +12,7 @@ const NewRoom = ({ setRoomRefresh }) => {
 
         await fetch('http://localhost:3001/api/newroom', {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${auth.accessToken}`,
-                'Content-Type': 'application/json'
-            },
+            credentials: 'include',
             body: JSON.stringify({ "room_name": roomName })
         })
         setRoomRefresh(new Date().getTime())

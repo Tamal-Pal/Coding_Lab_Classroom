@@ -8,7 +8,7 @@ const pool = mysql.createPool({
     user: process.env.DB_USER,
     database: process.env.DB_DB,
     password: process.env.DB_PASSWORD
-}).promise();
+}).promise()
 
 const isUser = async (email_id) => {
     [result] = await pool.query('select count(*) as exist from login_test where user_name = ?;', [email_id]);
@@ -45,7 +45,7 @@ const newUser = async (user, pwd, fullname, role) => {
     } catch (err) {
         throw err
     }
-};
+}
 module.exports.newUser = newUser;
 
 /*
@@ -92,8 +92,16 @@ const validateUser = async (user, pwd) => {
         console.log('database.js', e);
         throw e;
     }
-};
+}
 module.exports.validateUser = validateUser
+
+const refreshUser = async (user_id) => {
+    const [result] = await pool.query('select user, fullname from Users where user_id=?;', [user_id])
+    if(result.length === 0) throw new Error('User Not Found')
+
+    return { ...result[0], user_id }
+}
+module.exports.refreshUser = refreshUser
 
 const newRoom = async ({ user_id, room_name }) => {
     if(!user_id) return false
@@ -117,7 +125,6 @@ const newRoom = async ({ user_id, room_name }) => {
         return null
     }
 }
-
 module.exports.newRoom = newRoom
 
 const getTeachersRooms = async (admin_id) => {

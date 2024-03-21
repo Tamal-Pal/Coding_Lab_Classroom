@@ -25,7 +25,12 @@ const handleLogin = async (req, res) => {
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 )
-                res.json({ user, user_id, fullname, accessToken })
+                res.cookie('jwt', accessToken, {
+                    httpOnly: true,
+                    secure: true,
+                    maxAge: 1000 * 60 * 60 * 24
+                })
+                res.json({ user, user_id, fullname })
             } else if(response.status === 'INCORRECT_PASSWORD'){
                 res.status(401).json({ 'status': response.status })
             }

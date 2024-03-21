@@ -21,7 +21,7 @@ function Login() {
   const [errMsg, setErrMsg] = useState('')
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current.focus()
   }, [])
 
   useEffect(() => {
@@ -52,9 +52,9 @@ function Login() {
       }
       else if (response.status === 200) 
       {
-        const { user_id, fullname, accessToken } = await response.json()
+        const { user_id, fullname } = await response.json()
 
-        setAuth({ user, user_id, fullname, accessToken })
+        setAuth({ user, user_id, fullname })
 
         setUser('')
         setPwd('')

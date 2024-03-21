@@ -3,12 +3,17 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
 import useAuth from '../../hooks/useAuth'
+import { BASE_URL, LOGOUT_URL } from '../../config/URL'
 
 const NavigationBar = () => {
 
     const { auth, setAuth } = useAuth()
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await fetch(BASE_URL + LOGOUT_URL, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
         setAuth({})
     }
 
