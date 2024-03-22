@@ -18,7 +18,23 @@ const newRoom = async (req, res) => {
     }
 }
 
-module.exports = { newRoom }
+const joinRoom = async (req, res) => {
+    const { user_id } = req
+    if(!user_id) return res.sendStatus(401)
+
+    const{ room_id } = req.body
+    if(!room_id) return res.sendStatus(400)
+
+    try{
+        await database.joinRoom({ user_id, room_id })
+        res.sendStatus(202)
+    } catch(e){
+        console.error(e)
+        if(e.code === 'ER_DUP_ENTRY') return res.sendStatus(409)
+        else if(e.code === 'ER_NO_REFERENCED_ROW_2') return res.sendStatus(400)
+        else return res.sendStatus(500)
+    }
+}
 
 const getRooms = async (req, res) => {
     const { user_id } = req
@@ -36,4 +52,5 @@ const getRooms = async (req, res) => {
         res.sendStatus(422)
     }
 }
-module.exports.getRooms = getRooms
+
+module.exports = { newRoom, getRooms, joinRoom }

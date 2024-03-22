@@ -1,8 +1,11 @@
-const BASE_URL = 'http://localhost:3001/api'
 
-const LOGIN_URL = '/auth'
-const LOGOUT_URL = '/logout'
-const REFRESH_URL = '/refresh'
-const SIGNUP_URL = '/signup'
-
-module.exports = { BASE_URL, LOGIN_URL, REFRESH_URL, SIGNUP_URL, LOGOUT_URL }
+module.exports = {
+    BASE_URL: 'http://localhost:3001/api',
+    LOGIN_URL: '/auth',
+    LOGOUT_URL: '/logout',
+    REFRESH_URL: '/refresh',
+    SIGNUP_URL: '/signup',
+    JOIN_ROOM: '/joinroom',
+    NEW_ROOM: '/newroom',
+    GET_ROOMS: '/getrooms',
+};

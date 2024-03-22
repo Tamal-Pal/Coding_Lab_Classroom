@@ -1,19 +1,21 @@
-import React from 'react'
-import JoinRoom from './ClassRoom.jsx/JoinRoom'
-import RoomViewer from './ClassRoom.jsx/RoomViewer/RoomViewer'
+import React, { useState } from 'react'
+import JoinRoom from './ClassRoom/JoinRoom'
+import RoomViewer from './ClassRoom/RoomViewer/RoomViewer'
 import { Container, Row, Col } from 'react-bootstrap'
 
 function Student() {
+
+    const [roomRefresh, setRoomRefresh] = useState()
 
     return (
         <>
             <Container>
                 <Row style={{padding: '20px'}}>
                     <Col>
-                        <JoinRoom/>
+                        <JoinRoom roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
                     <Col>
-                        <RoomViewer/>
+                        <RoomViewer roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
                 </Row>
             </Container>

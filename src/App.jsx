@@ -3,15 +3,10 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import Signup from "./components/Signup/Signup";
 import Layout from './components/Layout/Layout'
-import UserLayout from './components/User/UserLayout'
-import Teacher from './components/User/Teacher'
-import Student from './components/User/Student'
 import NotFound from "./components/NotFound"
-import RequireAuth from "./components/RequireAuth";
-import { STU_REGEX, TCH_REGEX } from "./config/REGEX";
+import Refresh from "./components/Refresh";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Refresh from "./components/Refresh";
 // import Footer from "./components/Footer/Footer";
 
 function App() {
@@ -21,20 +16,8 @@ function App() {
             <Route path="/" element={<Layout />}>
 
                 <Route path="" element={<Refresh />} >
-                    { /* Public Routes */}
                     <Route path="" element={<Home />}>
-                        { /* Protected Routes */}
-                        <Route element={<RequireAuth allowedRoleREGEX={STU_REGEX} />}>
-                            <Route path='user' element={<UserLayout />}>
-                                <Route path='student' element={<Student />} />
-                            </Route>
-                        </Route>
 
-                        <Route element={<RequireAuth allowedRoleREGEX={TCH_REGEX} />}>
-                            <Route path='user' element={<UserLayout />}>
-                                <Route path='teacher' element={<Teacher />} />
-                            </Route>
-                        </Route>
                     </Route>
                 </Route>
                 <Route path="login" element={<Login />} />

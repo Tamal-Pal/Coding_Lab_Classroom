@@ -116,7 +116,6 @@ const newRoom = async ({ user_id, room_name }) => {
             values(?, ?, ?);`,
             [room_id, user_id, room_name]
         )
-        console.log('yo')
         return result
 
     } catch(e) {
@@ -127,8 +126,19 @@ const newRoom = async ({ user_id, room_name }) => {
 }
 module.exports.newRoom = newRoom
 
+const joinRoom = async({ user_id, room_id }) => {
+    const response = await pool.query(`
+    insert into rooms (user_id, room_id)
+    values (?, ?);
+    `, [user_id, room_id])
+}
+module.exports.joinRoom = joinRoom
+
 const getTeachersRooms = async (admin_id) => {
-    const [result] = await pool.query('select room_id, room_name from room_admin where admin_id=?;', [admin_id])
+    const [result] = await pool.query(`
+    select room_id, room_name from room_admin 
+    where admin_id=?;
+    `, [admin_id])
     return result
 }
 module.exports.getTeachersRooms = getTeachersRooms
@@ -137,10 +147,13 @@ const getStudentsRooms = async (user_id) => {
     const [result] = await pool.query(
         `select 
         rooms.room_id as room_id, 
-        room_admin.room_name as room_name 
-        from rooms, room_admin
-        where rooms.room_id=room_admin.room_id 
-        and rooms.user_id=?`,
+        room_admin.room_name as room_name,
+        Users.fullname as room_admin
+        from rooms, room_admin, Users
+        where 
+            rooms.user_id=?
+            and rooms.room_id=room_admin.room_id 
+            and room_admin.admin_id=Users.user_id;`,
         [user_id]
     )
     return result

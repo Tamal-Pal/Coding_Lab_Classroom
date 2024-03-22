@@ -18,7 +18,8 @@ router.post('/auth', authController.handleLogin)
 router.get('/refresh', verifyJWT, refreshController)
 
 router.post('/newroom', verifyJWT, roomController.newRoom)
-router.get('/getRooms', verifyJWT, roomController.getRooms)
+router.post('/joinroom', verifyJWT, roomController.joinRoom)
+router.get('/getrooms', verifyJWT, roomController.getRooms)
 router.delete('/logout', logoutController.handleLogout)
 
 module.exports = router;
