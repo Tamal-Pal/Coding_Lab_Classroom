@@ -20,6 +20,7 @@ const RoomViewer = ({ roomRefresh }) => {
     return (
         <Container className='room-viewer'>
             {
+                Array.isArray(rooms) &&
                 rooms.reverse().map(({ room_name, room_id, room_admin }, i) => {
                     return <RoomCard 
                         key={i} 
