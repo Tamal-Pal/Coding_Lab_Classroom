@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BASE_URL, REFRESH_URL } from '../config/URL'
+import { REFRESH_URL } from '../config/URL'
 import { Outlet } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
@@ -11,7 +11,7 @@ const Refresh = () => {
 
         const refresh = async () => {
             try {
-                fetch(BASE_URL + REFRESH_URL, {
+                fetch(REFRESH_URL, {
                     credentials: 'include'
                 }).then(async (res) => {
                     if(res.status === 401){

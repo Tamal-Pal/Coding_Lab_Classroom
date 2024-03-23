@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BASE_URL, NEW_ROOM } from '../../../config/URL'
+import { NEW_ROOM_URL } from '../../../config/URL'
 
 const NewRoom = ({ setRoomRefresh }) => {
 
@@ -11,7 +11,7 @@ const NewRoom = ({ setRoomRefresh }) => {
         if (!roomName) return
 
         try {
-            await fetch(BASE_URL + NEW_ROOM, {
+            await fetch(NEW_ROOM_URL, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

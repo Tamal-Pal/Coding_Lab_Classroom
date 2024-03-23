@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BASE_URL, JOIN_ROOM } from '../../../config/URL'
+import { JOIN_ROOM_URL } from '../../../config/URL'
 
 const JoinRoom = ({ setRoomRefresh }) => {
 
@@ -13,7 +13,7 @@ const JoinRoom = ({ setRoomRefresh }) => {
         if(!roomID) return
 
         try{
-            await fetch(BASE_URL + JOIN_ROOM, {
+            await fetch(JOIN_ROOM_URL, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import Signup from "./components/Signup/Signup";
 import Layout from './components/Layout/Layout'
 import NotFound from "./components/NotFound"
 import Refresh from "./components/Refresh";
+import ClassRoom from "./components/Home/ClassRoom/ClassRoom";
+import Editor from "./components/Home/ClassRoom/Editor/Editor"
+import User from "./components/Home/User";
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 // import Footer from "./components/Footer/Footer";
 
 function App() {
@@ -16,8 +20,10 @@ function App() {
             <Route path="/" element={<Layout />}>
 
                 <Route path="" element={<Refresh />} >
-                    <Route path="" element={<Home />}>
-
+                    <Route path="" element={<Home />} >
+                        <Route path="" element={<User />} />
+                        <Route path="classroom" element={<ClassRoom />} />
+                        <Route path="editor" element={<Editor />} />
                     </Route>
                 </Route>
                 <Route path="login" element={<Login />} />

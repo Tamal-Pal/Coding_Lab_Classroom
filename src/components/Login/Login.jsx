@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import './Login.css'
 
-import { BASE_URL, LOGIN_URL } from '../../config/URL';
+import { LOGIN_URL } from '../../config/URL';
 
 function Login() {
 
@@ -33,7 +33,7 @@ function Login() {
 
     try {
 
-      const response = await fetch(BASE_URL + LOGIN_URL, {
+      const response = await fetch(LOGIN_URL, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

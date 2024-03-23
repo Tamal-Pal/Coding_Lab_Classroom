@@ -1,26 +1,32 @@
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
+import { useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/useAuth'
-import { BASE_URL, LOGOUT_URL } from '../../config/URL'
+import { LOGOUT_URL } from '../../config/URL'
 
 const NavigationBar = () => {
+    const navigate = useNavigate()
 
     const { auth, setAuth } = useAuth()
 
     const handleLogout = async () => {
-        await fetch(BASE_URL + LOGOUT_URL, {
+        await fetch(LOGOUT_URL, {
             method: 'DELETE',
             credentials: 'include'
         })
         setAuth({})
     }
 
+    const goHome = () => {
+        navigate('/')
+    }
+
     return (
         <Navbar className="navigation-bar">
             <Container>
-                <Navbar.Brand href="">Coding Classroom</Navbar.Brand>
+                <Navbar.Brand onClick={goHome} style={{'cursor': 'pointer'}}>Coding Classroom</Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
