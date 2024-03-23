@@ -12,7 +12,7 @@ router.get('', (req, res) => {
     res.send('hi')
 })
 
-router.post('/signup', signupController);
+router.post('/signup', signupController)
 router.post('/auth', authController.handleLogin)
 
 router.get('/refresh', verifyJWT, refreshController)
@@ -20,6 +20,9 @@ router.get('/refresh', verifyJWT, refreshController)
 router.post('/newroom', verifyJWT, roomController.newRoom)
 router.post('/joinroom', verifyJWT, roomController.joinRoom)
 router.get('/getrooms', verifyJWT, roomController.getRooms)
+router.get('/getstudents', verifyJWT, roomController.getStudents)
+router.get('/roomname', verifyJWT, roomController.getRoomName)
+
 router.delete('/logout', logoutController.handleLogout)
 
-module.exports = router;
+module.exports = router

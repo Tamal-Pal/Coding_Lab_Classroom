@@ -159,3 +159,24 @@ const getStudentsRooms = async (user_id) => {
     return result
 }
 module.exports.getStudentsRooms = getStudentsRooms
+
+const getStudents = async (room_id) => {
+    const [result] = await pool.query(`select
+        Users.fullname as student_name,
+        rooms.user_id as student_id
+        from Users, rooms
+        where rooms.room_id=?
+        and rooms.user_id=Users.user_id;
+    `, [room_id])
+
+    return result
+}
+module.exports.getStudents = getStudents
+
+const getRoomName = async (room_id) => {
+    const [[room_name]] = await pool.query(`select room_name from room_admin
+    where room_id=?`, [room_id])
+
+    return room_name
+}
+module.exports.getRoomName = getRoomName
