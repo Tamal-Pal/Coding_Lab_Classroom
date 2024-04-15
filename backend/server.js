@@ -19,6 +19,10 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// app.get('/', (req, res) => {
+//     res.json({'yo': 'hi'})
+// })
+
 app.use('/api', require('./routes/api'))
 
 app.all('*', (req, res) => {
