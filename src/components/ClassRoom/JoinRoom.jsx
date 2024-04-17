@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { JOIN_ROOM_URL } from '../../../config/URL'
+import { JOIN_ROOM_URL } from '../../config/URL'
 
 const JoinRoom = ({ setRoomRefresh }) => {
 

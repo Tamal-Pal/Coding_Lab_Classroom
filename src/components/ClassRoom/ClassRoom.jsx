@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import useQuery from '../../../hooks/useQuery'
-import { GET_ROOM_NAME_URL, GET_STUDENTS_URL } from '../../../config/URL'
+import useQuery from '../../hooks/useQuery'
+import { GET_ROOM_NAME_URL, GET_STUDENTS_URL } from '../../config/URL'
 import StudentCard from './StudentCard/StudentCard'
 
 const ClassRoom = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import NewRoom from './ClassRoom/NewRoom'
-import RoomViewer from './ClassRoom/RoomViewer/RoomViewer'
+import NewRoom from '../ClassRoom/NewRoom'
+import RoomViewer from '../ClassRoom/RoomViewer/RoomViewer'
 
 function Teacher() {
 

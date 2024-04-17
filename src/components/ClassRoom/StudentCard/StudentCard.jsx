@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
-import useQuery from '../../../../hooks/useQuery';
+import useQuery from '../../../hooks/useQuery';
 
 function StudentCard({ student }) {
 

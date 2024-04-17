@@ -1,9 +1,8 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import useAuth from '../../../../hooks/useAuth'
-import { TCH_REGEX, STU_REGEX } from '../../../../config/REGEX'
-
+import useAuth from '../../../hooks/useAuth'
+import { TCH_REGEX, STU_REGEX } from '../../../config/REGEX'
 
 const RoomCard = ({ room_name, room_id, room_admin }) => {
 

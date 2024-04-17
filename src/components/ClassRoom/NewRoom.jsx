@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NEW_ROOM_URL } from '../../../config/URL'
+import { NEW_ROOM_URL } from '../../config/URL'
 
 const NewRoom = ({ setRoomRefresh }) => {
 

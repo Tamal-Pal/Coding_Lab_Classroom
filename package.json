@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "devBackend": "nodemon --watch ./backend --ignore ./backend/models/activeUsers.json ./backend/server.js",
-    "backend": "node ./backend/api.js",
+    "devApi": "nodemon --watch ./backend ./backend/apiServer.js",
+    "devSocket": "nodemon --watch ./backend ./backend/socketServer.js",
+    "api": "node ./backend/apiServer.js",
+    "socket": "node ./backend/socketServer.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -31,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
+    "socket.io": "^4.7.5",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -53,6 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3001"
+  }
 }

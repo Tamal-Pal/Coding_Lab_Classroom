@@ -1,9 +1,9 @@
-require('dotenv').config();
-const express = require('express');
+require('dotenv').config()
+const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const allowedOrigins = require('./config/allowedOrigins')
-const Time = require('./config/Time');
+const Time = require('./config/Time')
 
 const PORT = 3001
 const app = express()
@@ -15,8 +15,8 @@ const corsOptions = {
 }
 
 app.use(cookieParser())
-app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true }))
+app.use(cors(corsOptions))
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // app.get('/', (req, res) => {

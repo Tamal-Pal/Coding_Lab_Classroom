@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import './Login.css'
 
-import { LOGIN_URL } from '../../config/URL';
+import { LOGIN_URL } from '../../config/URL'
 
 function Login() {
 
@@ -11,10 +11,10 @@ function Login() {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/'
 
-  const userRef = useRef();
-  const errRef = useRef();
+  const userRef = useRef()
+  const errRef = useRef()
 
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
@@ -29,7 +29,7 @@ function Login() {
   }, [user, pwd])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
 
@@ -41,6 +41,7 @@ function Login() {
       })
       // console.log(response)
       // console.log('status', response.status)
+      console.log('login page', document.cookie)
 
       if (response.status === 400) {
         setErrMsg('Missing Username or Password')
@@ -69,11 +70,11 @@ function Login() {
     } catch (err) {
       console.error(err)
       if (!err?.response) {
-        setErrMsg('No Server Response');
+        setErrMsg('No Server Response')
       } else {
         setErrMsg('Login Failed')
       }
-      errRef.current.focus();
+      errRef.current.focus()
     }
   }
 

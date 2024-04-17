@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import RoomCard from './RoomCards'
-import { GET_ROOMS_URL } from '../../../../config/URL'
+import { GET_ROOMS_URL } from '../../../config/URL'
 
 const RoomViewer = ({ roomRefresh }) => {
 

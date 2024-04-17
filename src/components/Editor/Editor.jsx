@@ -1,5 +1,5 @@
 import React from 'react'
-import useQuery from '../../../../hooks/useQuery'
+import useQuery from '../../hooks/useQuery'
 
 const Editor = () => {
     const query = useQuery()

@@ -1,5 +1,5 @@
 
-const BASE_URL = `http://192.168.0.106:3001/api`
+const BASE_URL = `http://localhost:3001/api`
 module.exports = {
     LOGIN_URL: `${BASE_URL}/auth`,
     LOGOUT_URL: `${BASE_URL}/logout`,
@@ -10,4 +10,4 @@ module.exports = {
     GET_ROOMS_URL: `${BASE_URL}/getrooms`,
     GET_ROOM_NAME_URL: room_id => `${BASE_URL}/roomname?room_id=${room_id}`,
     GET_STUDENTS_URL: room_id => `${BASE_URL}/getstudents?room_id=${room_id}`
-};
+}

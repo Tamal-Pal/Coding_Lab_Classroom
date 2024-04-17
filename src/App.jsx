@@ -7,9 +7,9 @@ import Signup from "./components/Signup/Signup";
 import Layout from './components/Layout/Layout'
 import NotFound from "./components/NotFound"
 import Refresh from "./components/Refresh";
-import ClassRoom from "./components/Home/ClassRoom/ClassRoom";
-import Editor from "./components/Home/ClassRoom/Editor/Editor"
-import User from "./components/Home/User";
+import ClassRoom from "./components/ClassRoom/ClassRoom";
+import Editor from "./components/Editor/Editor"
+import User from "./components/User/User";
 
 // import Footer from "./components/Footer/Footer";
 

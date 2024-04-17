@@ -10,10 +10,12 @@ const Refresh = () => {
     useEffect(() => {
 
         const refresh = async () => {
+            console.log('refresh page cookie', document.cookie)
             try {
                 fetch(REFRESH_URL, {
                     credentials: 'include'
                 }).then(async (res) => {
+                    setAuth({})
                     if(res.status === 401){
                         setAuth({})
                     } else {
@@ -24,7 +26,7 @@ const Refresh = () => {
                     }
                 })
             } catch(e) {
-                console.error(e)
+                console.error('Can not refresh', e)
             }
         }
         refresh()
