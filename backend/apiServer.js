@@ -19,10 +19,6 @@ app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-// app.get('/', (req, res) => {
-//     res.json({'yo': 'hi'})
-// })
-
 app.use('/api', require('./routes/api'))
 
 app.all('*', (req, res) => {
@@ -30,5 +26,5 @@ app.all('*', (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`Server Is Listening on PORT ${PORT}`)
+    console.log(`API Server Is Listening on PORT ${PORT}`)
 })

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import RoomCard from './RoomCards'
+import customFetch from '../../../api/customFetch'
 import { GET_ROOMS_URL } from '../../../config/URL'
 
 const RoomViewer = ({ roomRefresh }) => {
@@ -9,8 +10,9 @@ const RoomViewer = ({ roomRefresh }) => {
 
     useEffect(() => {
         const fetchRooms = async () => {
-            const result = await fetch(GET_ROOMS_URL, {
-                credentials: 'include'
+            const result = await customFetchetch({
+                url: GET_ROOMS_URL,
+                token: localStorage.getItem('token')
             }).then(res => res.json())
             setRooms(result)
         }

@@ -20,15 +20,15 @@ const handleLogin = async (req, res) => {
             if(response.status === 'VALID_USER'){
                 // create JWTs
                 const { user_id, fullname } = response
-                const accessToken = jwt.sign(
+                const token = jwt.sign(
                     { user_id },
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 )
-                res.cookie('jwt', accessToken, {
+                res.cookie('jwt', token, {
                     maxAge: 1000 * 60 * 60 * 24
                 })
-                res.json({ user, user_id, fullname })
+                res.json({ user, user_id, fullname, token })
             } else if(response.status === 'INCORRECT_PASSWORD'){
                 res.status(401).json({ 'status': response.status })
             }

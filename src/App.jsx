@@ -8,7 +8,7 @@ import Layout from './components/Layout/Layout'
 import NotFound from "./components/NotFound"
 import Refresh from "./components/Refresh";
 import ClassRoom from "./components/ClassRoom/ClassRoom";
-import Editor from "./components/Editor/Editor"
+import Editor from "./components/Editor/Editor";
 import User from "./components/User/User";
 
 // import Footer from "./components/Footer/Footer";

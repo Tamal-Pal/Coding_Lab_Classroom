@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const Time = require('../config/Time')
 
 const verifyJWT = (req, res, next) => {
+    console.log('req.headers[authorization]', req.headers[authorization])
     const token = req?.cookies?.jwt
     console.log('verifying token', token)
     if(!token) {
