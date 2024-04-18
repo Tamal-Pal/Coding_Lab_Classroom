@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import useQuery from '../../hooks/useQuery'
 import { GET_ROOM_NAME_URL, GET_STUDENTS_URL } from '../../config/URL'
 import StudentCard from './StudentCard/StudentCard'
+import customFetch from '../../api/customFetch'
 
 const ClassRoom = () => {
 
@@ -16,9 +17,7 @@ const ClassRoom = () => {
 
         try {
             const getRoomName = async () => {
-                const result = await fetch(GET_ROOM_NAME_URL(room_id), {
-                    credentials: 'include'
-                })
+                const result = await customFetch(GET_ROOM_NAME_URL(room_id), { token: localStorage.getItem('token')})
                 if (result.status === 200) {
                     setRoomName((await result.json()).room_name)
                 }
@@ -32,8 +31,8 @@ const ClassRoom = () => {
 
         try {
             const getStudents = async () => {
-                const result = await fetch(GET_STUDENTS_URL(room_id), {
-                    credentials: 'include'
+                const result = await customFetch(GET_STUDENTS_URL(room_id), {
+                    token: localStorage.getItem('token')
                 })
                 if (result.status === 200) setStudents(await result.json())
                 else console.log(result.status)

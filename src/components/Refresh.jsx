@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { REFRESH_URL } from '../config/URL'
 import { Outlet } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+import customFetch from '../api/customFetch'
 
 const Refresh = () => {
 
@@ -10,10 +11,9 @@ const Refresh = () => {
     useEffect(() => {
 
         const refresh = async () => {
-            console.log('refresh page cookie', document.cookie)
             try {
-                fetch(REFRESH_URL, {
-                    credentials: 'include'
+                await customFetch(REFRESH_URL, {
+                    token: localStorage.getItem('token')
                 }).then(async (res) => {
                     setAuth({})
                     if(res.status === 401){

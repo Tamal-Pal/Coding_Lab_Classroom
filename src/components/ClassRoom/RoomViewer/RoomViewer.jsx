@@ -10,8 +10,7 @@ const RoomViewer = ({ roomRefresh }) => {
 
     useEffect(() => {
         const fetchRooms = async () => {
-            const result = await customFetchetch({
-                url: GET_ROOMS_URL,
+            const result = await customFetch(GET_ROOMS_URL, {
                 token: localStorage.getItem('token')
             }).then(res => res.json())
             setRooms(result)

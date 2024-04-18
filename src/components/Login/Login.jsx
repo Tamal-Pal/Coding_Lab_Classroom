@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth'
 import './Login.css'
 
 import { LOGIN_URL } from '../../config/URL'
+import customFetch from '../../api/customFetch'
 
 function Login() {
 
@@ -32,11 +33,9 @@ function Login() {
     e.preventDefault()
 
     try {
-
-      const response = await fetch(LOGIN_URL, {
+      const response = await customFetch(LOGIN_URL, {
         method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        token: localStorage.getItem('token'),
         body: JSON.stringify({ user, pwd })
       })
       // console.log(response)
@@ -54,8 +53,6 @@ function Login() {
         const { user_id, fullname, token } = await response.json()
 
         setAuth({ user, user_id, fullname, token })
-        console.log('login page', document.cookie)
-        console.log('login-page token', token)
 
         localStorage.setItem('token', token)
 

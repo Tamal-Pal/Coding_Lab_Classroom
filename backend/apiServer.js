@@ -11,7 +11,8 @@ const app = express()
 const corsOptions = {
     origin: allowedOrigins,
     credentials: true,            //access-control-allow-credentials:true
-    optionSuccessStatus: 200
+    optionSuccessStatus: 200,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }
 
 app.use(cookieParser())

@@ -3,6 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Signup.css'
 import { SIGNUP_URL } from '../../config/URL';
+import customFetch from '../../api/customFetch';
 
 const FULLNAME_REGEX = /\S+/
 const USER_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -86,11 +87,8 @@ function Signup() {
         }
 
         try {
-            const response = await fetch(SIGNUP_URL, {
+            const response = customFetch(SIGNUP_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({ fullname: fullname, user: user, role: role, pwd: pwd })
             })
 

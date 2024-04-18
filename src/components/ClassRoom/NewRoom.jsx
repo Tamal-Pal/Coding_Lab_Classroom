@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NEW_ROOM_URL } from '../../config/URL'
+import customFetch from '../../api/customFetch'
 
 const NewRoom = ({ setRoomRefresh }) => {
 
@@ -11,12 +12,9 @@ const NewRoom = ({ setRoomRefresh }) => {
         if (!roomName) return
 
         try {
-            await fetch(NEW_ROOM_URL, {
+            await customFetch(NEW_ROOM_URL, {
                 method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                token: localStorage.getItem('token'),
                 body: JSON.stringify({ "room_name": roomName })
             })
             setRoomRefresh(new Date().getTime())
