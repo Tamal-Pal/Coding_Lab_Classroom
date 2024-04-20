@@ -6,3 +6,7 @@
 .io div {
     flex: 1;
 }
+
+.editor-child {
+    padding: 20px;
+}
