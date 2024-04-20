@@ -8,6 +8,7 @@ module.exports = {
     JOIN_ROOM_URL: `${BASE_URL}/joinroom`,
     NEW_ROOM_URL: `${BASE_URL}/newroom`,
     GET_ROOMS_URL: `${BASE_URL}/getrooms`,
-    GET_ROOM_NAME_URL: room_id => `${BASE_URL}/roomname?room_id=${room_id}`,
-    GET_STUDENTS_URL: room_id => `${BASE_URL}/getstudents?room_id=${room_id}`
+    GET_STUDENTS_URL: room_id => `${BASE_URL}/getstudents?room_id=${room_id}`,
+    GET_STUDENT_URL: student_id => `${BASE_URL}/getstudent?user_id=${student_id}`,
+    GET_ROOM_DATA_URL: room_id => `${BASE_URL}/roomdata?room_id=${room_id}`,
 }

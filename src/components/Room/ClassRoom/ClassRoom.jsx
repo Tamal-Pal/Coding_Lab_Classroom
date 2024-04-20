@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import useQuery from '../../hooks/useQuery'
-import { GET_ROOM_NAME_URL, GET_STUDENTS_URL } from '../../config/URL'
-import StudentCard from './StudentCard/StudentCard'
-import customFetch from '../../api/customFetch'
+import useQuery from '../../../hooks/useQuery'
+import { GET_ROOM_DATA_URL, GET_STUDENTS_URL } from '../../../config/URL'
+import StudentCard from '../StudentCard/StudentCard'
+import customFetch from '../../../api/customFetch'
+import './ClassRoom.css'
 
 const ClassRoom = () => {
 
     const [students, setStudents] = useState([])
     const [roomName, setRoomName] = useState(null)
+    const [question, setQuestion] = useState(null)
+    const [language, setLanguage] = useState(null)
 
     const query = useQuery()
     const room_id = query.get('room_id')
@@ -16,15 +19,19 @@ const ClassRoom = () => {
     useEffect(() => {
 
         try {
-            const getRoomName = async () => {
-                const result = await customFetch(GET_ROOM_NAME_URL(room_id), { token: localStorage.getItem('token')})
+            const getRoomData = async () => {
+                const result = await customFetch(GET_ROOM_DATA_URL(room_id), { token: localStorage.getItem('token')})
                 if (result.status === 200) {
-                    setRoomName((await result.json()).room_name)
+                    const data = await result.json()
+                    console.log('data', data)
+                    setRoomName(data.room_name)
+                    setQuestion(data.question)
+                    setLanguage(data.language)
                 }
-                else console.log('Status while fetching roomname:', result.status)
+                else console.log('Status while fetching roomdata:', result.status)
             }
 
-            getRoomName()
+            getRoomData()
         } catch (e) {
             console.log('cannot fetch room name')
         }
@@ -42,13 +49,15 @@ const ClassRoom = () => {
         } catch (e) {
             console.log('cannot fetch students of this room')
         }
-    }, [])
+    }, [room_id])
 
     return (
         <>
             <Container>
                 <br />
                 <h3>{roomName}</h3>
+                <p>{question}</p>
+                <p>{language}</p>
                 <div className='classroom-container'>
                     {
                         students.map((student, i) => {

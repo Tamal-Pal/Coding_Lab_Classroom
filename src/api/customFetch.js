@@ -1,7 +1,6 @@
 const customFetch = async (url, { method = 'GET', body = undefined, token = undefined }) => {
 
     const headers = {}
-    console.log('yo')
 
     if (token) {
         headers['Authorization'] = `Bearer ${token}`
@@ -9,7 +8,6 @@ const customFetch = async (url, { method = 'GET', body = undefined, token = unde
     if (body) {
         headers['Content-Type'] = 'application/json'
     }
-    console.log(headers)
 
     return await fetch(url, {
         method: method.toUpperCase(),

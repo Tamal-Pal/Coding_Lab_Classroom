@@ -3,29 +3,19 @@
     color: #008DDA;
 }
 
-.card-body {
-    margin-top: 10px solid transparent;
-    border-radius: 0;
-    background-color: #F7EEDD;
-}
-
-.card-body:hover {
-    cursor: pointer;
-    background-color: #C6D8D5;
-}
-
-.room-viewer {
-    overflow-y: auto;
-    max-height: calc(100vh - nav height);
-}
-
-.classroom-container {
+.home {
     display: flex;
-    width: 100vw;
-    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0;
+
+    height: 100vh;
 }
 
-.student-card {
-    flex: 0 0 25%;
-    margin: 20px;
+.main {
+    padding: 20px;
+    height: 100%;
+}
+
+.footer-container {
+    margin-top: auto;
 }

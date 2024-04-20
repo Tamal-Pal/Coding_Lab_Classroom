@@ -17,7 +17,9 @@ const NavigationBar = () => {
             method: 'DELETE',
             token: localStorage.getItem('token')
         })
+        localStorage.removeItem('token')
         setAuth({})
+        navigate('/')
     }
 
     const goHome = () => {

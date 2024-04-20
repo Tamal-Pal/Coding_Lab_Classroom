@@ -97,28 +97,28 @@ module.exports.validateUser = validateUser
 
 const refreshUser = async (user_id) => {
     const [result] = await pool.query('select user, fullname from Users where user_id=?;', [user_id])
-    if(result.length === 0) throw new Error('User Not Found')
+    if (result.length === 0) throw new Error('User Not Found')
 
     return { ...result[0], user_id }
 }
 module.exports.refreshUser = refreshUser
 
-const newRoom = async ({ user_id, room_name }) => {
-    if(!user_id) return false
+const newRoom = async ({ user_id, room_name, question, language }) => {
+    if (!user_id) return false
 
-    if(!room_name) roomDesc = ''
+    if (!room_name) roomDesc = ''
 
     const room_id = `R${new Date().getTime()}`
 
     try {
         const [result] = await pool.query(
-            `insert into room_admin (room_id, admin_id, room_name)
-            values(?, ?, ?);`,
-            [room_id, user_id, room_name]
+            `insert into room_admin (room_id, admin_id, room_name, question, language)
+            values(?, ?, ?, ?, ?);`,
+            [room_id, user_id, room_name, question, language]
         )
         return result
 
-    } catch(e) {
+    } catch (e) {
         console.error(e, 'Error occurred while pusing into database')
 
         return null
@@ -126,7 +126,7 @@ const newRoom = async ({ user_id, room_name }) => {
 }
 module.exports.newRoom = newRoom
 
-const joinRoom = async({ user_id, room_id }) => {
+const joinRoom = async ({ user_id, room_id }) => {
     const response = await pool.query(`
     insert into rooms (user_id, room_id)
     values (?, ?);
@@ -173,10 +173,23 @@ const getStudents = async (room_id) => {
 }
 module.exports.getStudents = getStudents
 
-const getRoomName = async (room_id) => {
-    const [[room_name]] = await pool.query(`select room_name from room_admin
-    where room_id=?`, [room_id])
+const getStudent = async (user_id) => {
+    const [result] = await pool.query(`select 
+        fullname as student_name 
+        from Users
+        where user_id=?;`,
+        [user_id]
+    )
 
-    return room_name
+    return result[0]
 }
-module.exports.getRoomName = getRoomName
+module.exports.getStudent = getStudent
+
+const getRoomData = async (room_id) => {
+    const [[result]] = await pool.query(`select room_name, question, language from room_admin
+    where room_id=?`, [room_id])
+    // console.log(result)
+
+    return result
+}
+module.exports.getRoomData = getRoomData

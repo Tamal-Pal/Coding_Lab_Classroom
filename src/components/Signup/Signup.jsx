@@ -87,10 +87,11 @@ function Signup() {
         }
 
         try {
-            const response = customFetch(SIGNUP_URL, {
+            const response = await customFetch(SIGNUP_URL, {
                 method: 'POST',
                 body: JSON.stringify({ fullname: fullname, user: user, role: role, pwd: pwd })
             })
+            // console.log(response.status)
 
             if(response.status === 200 || response.status === 201){
                 setSuccess(true)

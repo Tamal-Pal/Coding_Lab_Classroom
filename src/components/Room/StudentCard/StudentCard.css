@@ -1,0 +1,15 @@
+.card-body {
+    margin-top: 10px solid transparent;
+    border-radius: 0;
+    background-color: #F7EEDD;
+}
+
+.card-body:hover {
+    cursor: pointer;
+    background-color: #C6D8D5;
+}
+
+.student-card {
+    flex: 0 0 25%;
+    margin: 20px;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import JoinRoom from '../ClassRoom/JoinRoom'
-import RoomViewer from '../ClassRoom/RoomViewer/RoomViewer'
+import JoinRoom from '../Room/JoinRoom'
+import RoomViewer from '../Room/RoomViewer/RoomViewer'
 import { Container, Row, Col } from 'react-bootstrap'
 
 function Student() {

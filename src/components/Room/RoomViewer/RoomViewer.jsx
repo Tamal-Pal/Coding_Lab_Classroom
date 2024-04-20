@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import RoomCard from './RoomCards'
 import customFetch from '../../../api/customFetch'
 import { GET_ROOMS_URL } from '../../../config/URL'
+import './RoomViewer.css'
 
 const RoomViewer = ({ roomRefresh }) => {
 
@@ -19,12 +20,12 @@ const RoomViewer = ({ roomRefresh }) => {
         fetchRooms()
     }, [roomRefresh])
     return (
-        <Container className='room-viewer'>
+        <Container className='room-viewer overflow-auto flex-grow'>
             {
                 Array.isArray(rooms) &&
                 rooms.reverse().map(({ room_name, room_id, room_admin }, i) => {
                     return <RoomCard 
-                        key={i} 
+                        key={i}
                         room_name={room_name} 
                         room_id={room_id} 
                         room_admin={room_admin}

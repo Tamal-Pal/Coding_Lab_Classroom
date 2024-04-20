@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    min-height: 100vh;
+    max-width: 100vw !important;
     background-color: #41C9E2;
 }
 
@@ -25,4 +25,50 @@ body {
     min-height: 100vh;
     padding: 1rem 0.5rem;
     color: white;
+}
+
+/* Shade classes */
+.shade1 {
+    background-color: #606c38;
+}
+
+.shade2 {
+    background-color: #283618;
+}
+
+.shade3 {
+    background-color: #fefae0;
+}
+
+.shade4 {
+    background-color: #dda15e;
+}
+
+.shade5 {
+    background-color: #bc6c25;
+}
+
+/* Text shade classes */
+.textshade1 {
+    color: #606c38;
+}
+
+.textshade2 {
+    color: #283618;
+}
+
+.textshade3 {
+    color: #fefae0;
+}
+
+.textshade4 {
+    color: #dda15e;
+}
+
+.textshade5 {
+    color: #bc6c25;
+}
+
+.textshadeblack {
+    color: black;
 }

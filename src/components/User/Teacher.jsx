@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import NewRoom from '../ClassRoom/NewRoom'
-import RoomViewer from '../ClassRoom/RoomViewer/RoomViewer'
+import NewRoom from '../Room/NewRoom'
+import RoomViewer from '../Room/RoomViewer/RoomViewer'
 
 function Teacher() {
 
@@ -14,7 +14,7 @@ function Teacher() {
                     <Col>
                         <NewRoom roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
-                    <Col>
+                    <Col style={{ display: 'flex' }}>
                         <RoomViewer roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
                 </Row>

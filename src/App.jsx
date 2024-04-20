@@ -7,11 +7,9 @@ import Signup from "./components/Signup/Signup";
 import Layout from './components/Layout/Layout'
 import NotFound from "./components/NotFound"
 import Refresh from "./components/Refresh";
-import ClassRoom from "./components/ClassRoom/ClassRoom";
+import ClassRoom from "./components/Room/ClassRoom/ClassRoom";
 import Editor from "./components/Editor/Editor";
 import User from "./components/User/User";
-
-// import Footer from "./components/Footer/Footer";
 
 function App() {
 
@@ -34,8 +32,6 @@ function App() {
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
-
-        {/* <Footer /> */}
 
     </>
     )

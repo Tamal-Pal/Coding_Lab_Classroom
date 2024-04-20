@@ -20,8 +20,9 @@ router.get('/refresh', verifyJWT, refreshController)
 router.post('/newroom', verifyJWT, roomController.newRoom)
 router.post('/joinroom', verifyJWT, roomController.joinRoom)
 router.get('/getrooms', verifyJWT, roomController.getRooms)
-router.get('/getstudents', verifyJWT, roomController.getStudents)
-router.get('/roomname', verifyJWT, roomController.getRoomName)
+router.get('/getstudents', verifyJWT, roomController.getStudents)   //eg: baseUrl/api/getstudents?room_id={someRoomId}
+router.get('/getstudent', verifyJWT, roomController.getStudent)     //eg: baseUrl/api/getstudent?user_id={someUserId}
+router.get('/roomdata', verifyJWT, roomController.getRoomData)      //eg: baseUrl/api/roomdata?room_id={someRoomId}
 
 router.delete('/logout', logoutController.handleLogout)
 

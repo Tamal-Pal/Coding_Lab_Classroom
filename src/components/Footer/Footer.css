@@ -1,11 +1,9 @@
-.footer-container {
-    margin-top: auto;
-    margin: 0;
-    padding: 0;
-}
 
 footer {
-    min-width: 100vw;
     background: #ACE2E1;
     margin: 0px;
+}
+
+footer p {
+    margin: 0;
 }

@@ -1,6 +1,7 @@
-import Card from 'react-bootstrap/Card';
-import { useNavigate } from 'react-router-dom';
-import useQuery from '../../../hooks/useQuery';
+import Card from 'react-bootstrap/Card'
+import './StudentCard.css'
+import { useNavigate } from 'react-router-dom'
+import useQuery from '../../../hooks/useQuery'
 
 function StudentCard({ student }) {
 
@@ -23,4 +24,4 @@ function StudentCard({ student }) {
     );
 }
 
-export default StudentCard;
+export default StudentCard

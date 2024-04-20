@@ -1,0 +1,8 @@
+.io, .code {
+    display: flex;
+    flex-direction: column;
+}
+
+.io div {
+    flex: 1;
+}
