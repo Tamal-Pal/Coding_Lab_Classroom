@@ -1,11 +1,11 @@
-import { io } from "socket.io-client";
+import { io } from "socket.io-client"
+import { SOCKET_SERVER_URL } from "./URL"
 
 export const initSocket = async () =>{
     const option = {
         'force new connection': true,
-        reconnectionAttempt: "infinity",
-        timeout: 10000,
+        timeout: 500,
         transports: ["websocket"],
-    };
-    return io(process.env.REACT_APP_SOCKET_SERVER_URL, option);
+    }
+    return io(SOCKET_SERVER_URL, option)
 };

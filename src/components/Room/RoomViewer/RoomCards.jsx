@@ -1,5 +1,5 @@
-import React, { useId } from 'react'
-import { Card, Button } from 'react-bootstrap'
+import React, { useId, useState } from 'react'
+import { Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import { TCH_REGEX, STU_REGEX } from '../../../config/REGEX'
@@ -22,9 +22,17 @@ const RoomCard = ({ room_name, room_id, room_admin }) => {
 
     const buttonId = `button${useId()}`
 
+    const [copied, setCopied] = useState(false)
+
     const handleBodyClick = (event) => {
         if (event.target.id === buttonId) {
-            navigator.clipboard.writeText(room_id)
+            try{
+                navigator.clipboard.writeText(room_id)
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
+            } catch(e) {
+                window.alert(`Cannot Copy Room ID. Copy it from here ${room_id}`)
+            }
         }
         else {
             enterRoom()
@@ -40,7 +48,14 @@ const RoomCard = ({ room_name, room_id, room_admin }) => {
                     </Card.Title>
                     {room_id && <Card.Subtitle>Room ID: {room_id}</Card.Subtitle>}
                     {room_admin && <Card.Subtitle>Room Admin: {room_admin}</Card.Subtitle>}
-                    {isTeacher(user_id) && <a className='btn btn-secondary copy-button' id={buttonId}>Copy Room ID</a>}
+                    {isTeacher(user_id) && <span className='btn btn-secondary copy-button' id={buttonId}>
+                        Copy Room ID 
+                        <span className='clipboard-icon'>
+                        {copied 
+                            ? <i className="bi bi-check"></i>
+                            : <i className="bi bi-clipboard"></i>
+                        }</span>
+                    </span>}
                 </Card.Body>
             </Card>
         </>

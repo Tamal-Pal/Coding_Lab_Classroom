@@ -21,7 +21,7 @@ const Chat = ({ className, student_id }) => {
         }
 
         getData()
-    }, [])
+    }, [student_id])
 
     return <div className={`${className} chat`}>
         {
@@ -29,6 +29,8 @@ const Chat = ({ className, student_id }) => {
             ? (<>{studentName}</>)
             : (<>Chat Window</>)
         }
+        <hr />
+        
     </div>
 }
 

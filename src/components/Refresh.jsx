@@ -31,7 +31,7 @@ const Refresh = () => {
         }
         refresh()
 
-    }, [])
+    }, [setAuth])
 
     return (
         <Outlet />

@@ -7,6 +7,8 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server);
 
+const PORT = process.env.REACT_APP_SOCKET_SERVER_PORT || 3002;
+
 const userSocketMap = {};
 
 const getAllConnectedClients = (roomId) => {
@@ -57,5 +59,4 @@ io.on("connection", (socket) => {
     });
 });
 
-const PORT = process.env.port || 3002;
 server.listen(PORT, () => console.log(`Socket Server Is Running on PORT ${PORT}`));
