@@ -4,10 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Signup.css'
 import { SIGNUP_URL } from '../../config/URL';
 import customFetch from '../../api/customFetch';
-
-const FULLNAME_REGEX = /\S+/
-const USER_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/
+import { FULLNAME_REGEX, USER_REGEX, PWD_REGEX } from '../../config/REGEX';
 
 function Signup() {
 
