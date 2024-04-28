@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Signup.css'
 import { SIGNUP_URL } from '../../config/URL';
 import customFetch from '../../api/customFetch';
-import { FULLNAME_REGEX, USER_REGEX, PWD_REGEX } from '../../config/REGEX';
+import { FULLNAME_REGEX, USER_NAME_REGEX, PWD_REGEX } from '../../config/REGEX';
 
 function Signup() {
 
@@ -45,7 +45,7 @@ function Signup() {
     }, [fullname]);
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
+        const result = USER_NAME_REGEX.test(user);
         // console.log(result);
         // console.log(user);
         setValidName(result);
@@ -76,7 +76,7 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const v1 = USER_REGEX.test(user)
+        const v1 = USER_NAME_REGEX.test(user)
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
