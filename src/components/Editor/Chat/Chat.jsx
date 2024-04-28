@@ -20,7 +20,7 @@ const Chat = ({ className, student_id }) => {
             setStudentName(data?.student_name)
         }
 
-        getData()
+        student_id && getData()
     }, [student_id])
 
     return <div className={`${className} chat`}>

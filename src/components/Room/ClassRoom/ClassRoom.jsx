@@ -23,7 +23,6 @@ const ClassRoom = () => {
                 const result = await customFetch(GET_ROOM_DATA_URL(room_id), { token: localStorage.getItem('token')})
                 if (result.status === 200) {
                     const data = await result.json()
-                    console.log('data', data)
                     setRoomName(data.room_name)
                     setQuestion(data.question)
                     setLanguage(data.language)
