@@ -2,11 +2,15 @@ import React, { useEffect } from 'react'
 import { REFRESH_URL } from '../config/URL'
 import { Outlet } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+import useSocket from '../hooks/useSocket'
 import customFetch from '../api/customFetch'
+import { initSocket } from '../config/Socket'
+import SocketEvent from '../config/SocketEvent'
 
 const Refresh = () => {
 
     const { setAuth } = useAuth()
+    const { socket, setSocket } = useSocket()
 
     useEffect(() => {
 
@@ -16,22 +20,37 @@ const Refresh = () => {
                     token: localStorage.getItem('token')
                 }).then(async (res) => {
                     setAuth({})
-                    if(res.status === 401){
+                    if (res.status === 401) {
                         setAuth({})
                     } else {
                         const result = await res.json()
                         const { user, user_id, fullname } = result
-                        if(user && user_id && fullname) setAuth({ user, user_id, fullname })
+                        if (user && user_id && fullname) {
+                            setAuth({ user, user_id, fullname })
+                            setSocket(await initSocket())
+                        }
                         else setAuth({})
                     }
                 })
-            } catch(e) {
+            } catch (e) {
                 console.error('Can not refresh', e)
             }
         }
         refresh()
 
-    }, [setAuth])
+        return () => {
+
+            try{
+                socket?.disconnect()
+                // socket?.off(SocketEvent.JOINED)
+                socket?.off(SocketEvent.DISCONNECTED)
+            }
+            catch(e) {
+                console.error('ERROR: Cannot Disconnect Socket', e)
+            }
+        }
+
+    }, [setAuth, setSocket])
 
     return (
         <Outlet />

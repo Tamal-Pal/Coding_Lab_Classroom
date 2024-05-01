@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
+// import useAuth from '../../hooks/useAuth'
 import './Login.css'
 
 import { LOGIN_URL } from '../../config/URL'
@@ -8,7 +8,7 @@ import customFetch from '../../api/customFetch'
 
 function Login() {
 
-  const { setAuth } = useAuth()
+  // const { setAuth } = useAuth()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -35,7 +35,7 @@ function Login() {
     try {
       const response = await customFetch(LOGIN_URL, {
         method: 'POST',
-        token: localStorage.getItem('token'),
+        // token: localStorage.getItem('token'),
         body: JSON.stringify({ user, pwd })
       })
       // console.log(response)
@@ -50,14 +50,14 @@ function Login() {
         errRef.current.focus()
       }
       else if (response.status === 200) {
-        const { user_id, fullname, token } = await response.json()
+        // const { user_id, fullname, token } = await response.json()
+        const { token } = await response.json()
 
-        setAuth({ user, user_id, fullname, token })
-
+        // setAuth({ user, user_id, fullname, token })
         localStorage.setItem('token', token)
 
-        setUser('')
-        setPwd('')
+        // setUser('')
+        // setPwd('')
         navigate(from, { replace: true })
         //reference: https://www.youtube.com/watch?v=oUZjO00NkhY&list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&index=3
         //section: manage browser history}

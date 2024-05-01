@@ -6,6 +6,7 @@ import useNotebookId from '../../../hooks/useNotebookId'
 // import useAuth from '../../../hooks/useAuth'
 import { CODE_CHANGE } from '../../../config/SocketEvent'
 import useRole from '../../../hooks/useRole'
+import { generateChange } from '../../../utils/codeSync'
 
 const CodeEditor = ({ className, roomData, socket }) => {
 
@@ -14,12 +15,17 @@ const CodeEditor = ({ className, roomData, socket }) => {
     const notebook = useNotebookId()
     const role = useRole()
 
-    const codeChange = useCallback((val, viewUpdate) => {
+    const codeChange = useCallback((changedCodeVal, viewUpdate) => {
         // console.log('update', viewUpdate)
         // console.log('val:', val);
         // console.log('type', typeof(val))
-        setCodeValue(val);
-        socket.emit(CODE_CHANGE, { notebook, code: val, role })
+
+        //## Some Logical Error!!!!
+        console.log('code value', codeValue)
+        var change = generateChange(codeValue, changedCodeVal);
+        console.log('outside function', change)
+        setCodeValue(changedCodeVal);
+        socket.emit(CODE_CHANGE, { notebook, code: changedCodeVal, role, change })
     }, [notebook, socket, role]);
 
     useEffect(() => {

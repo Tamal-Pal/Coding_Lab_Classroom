@@ -6,13 +6,14 @@ import useQuery from '../../hooks/useQuery'
 import customFetch from '../../api/customFetch'
 import { GET_ROOM_DATA_URL } from '../../config/URL'
 import './Editor.css'
-import { initSocket } from '../../config/Socket'
-import SocketEvent, { CONNECT_ERROR, CONNECT_FAILED } from '../../config/SocketEvent'
+// import { initSocket } from '../../config/Socket'
+import { CONNECT_ERROR, CONNECT_FAILED } from '../../config/SocketEvent'
 import useNotebookId from '../../hooks/useNotebookId'
 import useAuth from '../../hooks/useAuth'
+import useSocket from '../../hooks/useSocket'
 
 const Editor = () => {
-    const [socket, setSocket] = useState()
+    const { socket } = useSocket()
     const query = useQuery()
     const room_id = query.get('room_id')
     const student_id = query.get('student_id')
@@ -52,19 +53,19 @@ const Editor = () => {
         fetchRoomData()
     }, [room_id, roomDataNotFound])
 
-    useEffect(() => {
-        const init = async () => {
-            setSocket(await initSocket())
-        }
+    // useEffect(() => {
+    //     const init = async () => {
+    //         setSocket(await initSocket())
+    //     }
 
-        init()
+    //     init()
 
-        return () => {
-            socket?.disconnect()
-            // socket?.off(SocketEvent.JOINED)
-            socket?.off(SocketEvent.DISCONNECTED)
-        }
-    }, [setSocket])
+    //     return () => {
+    //         socket?.disconnect()
+    //         // socket?.off(SocketEvent.JOINED)
+    //         socket?.off(SocketEvent.DISCONNECTED)
+    //     }
+    // }, [setSocket])
 
     useEffect(() => {
         socket?.on(CONNECT_ERROR, (err) => console.error(err))

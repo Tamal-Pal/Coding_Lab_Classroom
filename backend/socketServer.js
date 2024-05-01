@@ -31,7 +31,8 @@ io.on("connection", (socket) => {
         socket.join(notebook);
     });
 
-    socket.on('code-change', ({notebook, code, role}) =>{
+    socket.on('code-change', ({notebook, code, role, change}) =>{
+        console.log(change)
         socket.in(notebook).emit("code-change", {code});
     });
     socket.on('sync-code', ({socketId, code}) =>{

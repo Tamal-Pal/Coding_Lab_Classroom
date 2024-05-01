@@ -8,7 +8,6 @@ import 'react-bootstrap'
 
 const Home = () => {
     const { auth } = useAuth()
-    console.log(auth)
 
     return (
         USER_REGEX.test(auth.user_id) ?

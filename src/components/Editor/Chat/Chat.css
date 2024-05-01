@@ -1,4 +1,69 @@
 .chat {
     background-color: #2E949E;
-    padding: 20px !important;
+    padding: 15px !important;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    color: white;
+}
+
+.chat hr {
+    color: white;
+    height: 2px;
+}
+
+.messages {
+    flex-grow: 1;
+    max-height: 100%;
+}
+
+.message {
+    margin: 5px;
+    padding: 10px;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.mine {
+    background-color: bisque;
+    text-align: right;
+    /* float: right; */
+    border-radius: 15px 15px 0px 15px;
+}
+
+.their {
+    background-color: aliceblue;
+    /* float: left; */
+    border-radius: 15px 15px 15px 0px;
+}
+
+.new-message {
+    font-size: 16px;
+}
+
+textarea:focus {
+    border-color: wheat;
+    box-shadow: 0 1px 1px white inset, 0 0 8px wheat;
+    outline: 0 none;
+}
+
+.message-input {
+    font-size: 16px;
+    width: 90%;
+    display: inline-block;
+}
+
+.send-message {
+    padding-left: 5px;
+    text-decoration: none;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.send-message:hover {
+    color: rgb(202, 227, 249);
+    cursor: pointer;
 }
