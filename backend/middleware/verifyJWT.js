@@ -1,6 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const Time = require('../config/Time')
+const Time = require('../utils/Time')
 
 const verifyJWT = (req, res, next) => {
     const AuthorizationToken = req.headers['authorization']

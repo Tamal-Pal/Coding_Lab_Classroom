@@ -27,7 +27,7 @@ const Refresh = () => {
                         const { user, user_id, fullname } = result
                         if (user && user_id && fullname) {
                             setAuth({ user, user_id, fullname })
-                            setSocket(await initSocket())
+                            setSocket(await initSocket(user_id))
                         }
                         else setAuth({})
                     }

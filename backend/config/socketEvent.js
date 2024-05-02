@@ -1,4 +1,5 @@
 module.exports = {
+    CONNECTION: 'connection',
     CONNECT_ERROR: 'connect_error',
     CONNECT_FAILED: 'connect_failed',
     JOIN: 'join',

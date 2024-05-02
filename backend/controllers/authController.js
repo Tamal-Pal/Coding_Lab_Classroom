@@ -4,7 +4,7 @@ const database = require('../models/database')
 const jwt = require('jsonwebtoken')
 // const fsPromises = require('fs').promises
 const path = require('path')
-const Time = require('../config/Time')
+const Time = require('../utils/Time')
 
 // var activeUsers = require('../models/activeUsers.json')
 

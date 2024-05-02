@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const allowedOrigins = require('./config/allowedOrigins')
-const Time = require('./config/Time')
+const Time = require('./utils/Time')
 
 const PORT = process.env.REACT_APP_API_SERVER_PORT || 3001
 const app = express()

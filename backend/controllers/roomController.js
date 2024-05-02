@@ -1,5 +1,5 @@
 require('dotenv').config()
-const Time = require('../config/Time')
+const Time = require('../utils/Time')
 const database = require('../models/database')
 
 const newRoom = async (req, res) => {
