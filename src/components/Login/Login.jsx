@@ -1,20 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom'
+// import useAuth from '../../hooks/useAuth'
 import './Login.css'
 
-import { LOGIN_URL } from '../../config/URL';
+import { LOGIN_URL } from '../../config/URL'
+import customFetch from '../../api/customFetch'
 
 function Login() {
 
-  const { setAuth } = useAuth()
+  // const { setAuth } = useAuth()
 
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/'
 
-  const userRef = useRef();
-  const errRef = useRef();
+  const userRef = useRef()
+  const errRef = useRef()
 
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
@@ -29,14 +30,12 @@ function Login() {
   }, [user, pwd])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-
-      const response = await fetch(LOGIN_URL, {
+      const response = await customFetch(LOGIN_URL, {
         method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        // token: localStorage.getItem('token'),
         body: JSON.stringify({ user, pwd })
       })
       // console.log(response)
@@ -50,14 +49,15 @@ function Login() {
         setErrMsg('Unauthorized')
         errRef.current.focus()
       }
-      else if (response.status === 200) 
-      {
-        const { user_id, fullname } = await response.json()
+      else if (response.status === 200) {
+        // const { user_id, fullname, token } = await response.json()
+        const { token } = await response.json()
 
-        setAuth({ user, user_id, fullname })
+        // setAuth({ user, user_id, fullname, token })
+        localStorage.setItem('token', token)
 
-        setUser('')
-        setPwd('')
+        // setUser('')
+        // setPwd('')
         navigate(from, { replace: true })
         //reference: https://www.youtube.com/watch?v=oUZjO00NkhY&list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&index=3
         //section: manage browser history}
@@ -69,52 +69,52 @@ function Login() {
     } catch (err) {
       console.error(err)
       if (!err?.response) {
-        setErrMsg('No Server Response');
+        setErrMsg('No Server Response')
       } else {
         setErrMsg('Login Failed')
       }
-      errRef.current.focus();
+      errRef.current.focus()
     }
   }
 
   return (
-      <div className='App'>
-        <section>
-          <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
-          <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor=''>Username/Email Id:</label>
-            <input
-              type='text'
-              id='username'
-              ref={userRef}
-              autoComplete='off'
-              onChange={(e) => { setUser(e.target.value) }}
-              value={user}
-              required
-            />
+    <div className='App'>
+      <section>
+        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor=''>Username/Email Id:</label>
+          <input
+            type='text'
+            id='username'
+            ref={userRef}
+            autoComplete='off'
+            onChange={(e) => { setUser(e.target.value) }}
+            value={user}
+            required
+          />
 
-            <label password=''>Password:</label>
-            <input
-              type='password'
-              id='password'
-              onChange={(e) => { setPwd(e.target.value) }}
-              value={pwd}
-              required
-            />
+          <label password=''>Password:</label>
+          <input
+            type='password'
+            id='password'
+            onChange={(e) => { setPwd(e.target.value) }}
+            value={pwd}
+            required
+          />
 
-            <button>Sign In</button>
-          </form>
-          <p>
-            Need an Account?<br />
-            <span className='line'>
-              {/*put router link here */}
-              <a href='/signup'>Sign Up</a>
-            </span>
-          </p>
-        </section>
-      </div>
-    )
-  }
+          <button>Sign In</button>
+        </form>
+        <p>
+          Need an Account?<br />
+          <span className='line'>
+            {/*put router link here */}
+            <a href='/signup'>Sign Up</a>
+          </span>
+        </p>
+      </section>
+    </div>
+  )
+}
 
-  export default Login
+export default Login

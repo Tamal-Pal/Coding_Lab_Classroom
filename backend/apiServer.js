@@ -1,27 +1,24 @@
-require('dotenv').config();
-const express = require('express');
+require('dotenv').config()
+const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const allowedOrigins = require('./config/allowedOrigins')
-const Time = require('./config/Time');
+const Time = require('./utils/Time')
 
-const PORT = 3001
+const PORT = process.env.REACT_APP_API_SERVER_PORT || 3001
 const app = express()
 
 const corsOptions = {
     origin: allowedOrigins,
     credentials: true,            //access-control-allow-credentials:true
-    optionSuccessStatus: 200
+    optionSuccessStatus: 200,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }
 
 app.use(cookieParser())
-app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true }))
+app.use(cors(corsOptions))
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-
-// app.get('/', (req, res) => {
-//     res.json({'yo': 'hi'})
-// })
 
 app.use('/api', require('./routes/api'))
 
@@ -30,5 +27,5 @@ app.all('*', (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`Server Is Listening on PORT ${PORT}`)
+    console.log(`API Server Is Listening on PORT ${PORT}`)
 })

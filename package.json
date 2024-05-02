@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "devBackend": "nodemon --watch ./backend --ignore ./backend/models/activeUsers.json ./backend/server.js",
-    "backend": "node ./backend/api.js",
+    "devApi": "nodemon --watch ./backend ./backend/apiServer.js",
+    "devSocket": "nodemon --watch ./backend ./backend/socketServer.js",
+    "api": "node ./backend/apiServer.js",
+    "socket": "node ./backend/socketServer.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -17,6 +19,12 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/codemirror-extensions-langs": "^4.21.25",
+    "@uiw/codemirror-theme-okaidia": "^4.21.25",
+    "@uiw/codemirror-theme-vscode": "^4.21.25",
+    "@uiw/codemirror-themes": "^4.21.25",
+    "@uiw/codemirror-themes-all": "^4.21.25",
+    "@uiw/react-codemirror": "^4.21.25",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
@@ -28,9 +36,13 @@
     "mysql2": "^3.9.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
+    "react-bootstrap-chat-ui": "^0.0.11",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -53,6 +65,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3001"
+  }
 }

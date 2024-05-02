@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { JOIN_ROOM_URL } from '../../../config/URL'
+import { JOIN_ROOM_URL } from '../../config/URL'
+import customFetch from '../../api/customFetch'
 
 const JoinRoom = ({ setRoomRefresh }) => {
 
@@ -13,12 +14,9 @@ const JoinRoom = ({ setRoomRefresh }) => {
         if(!roomID) return
 
         try{
-            await fetch(JOIN_ROOM_URL, {
+            await customFetch(JOIN_ROOM_URL, {
                 method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                token: localStorage.getItem('token'),
                 body: JSON.stringify({ room_id: roomID })
             })
             setRoomRefresh(new Date().getTime())

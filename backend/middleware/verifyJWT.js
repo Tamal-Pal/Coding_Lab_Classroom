@@ -1,12 +1,19 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const Time = require('../config/Time')
+const Time = require('../utils/Time')
 
 const verifyJWT = (req, res, next) => {
-    const token = req?.cookies?.jwt
-    if(!token) { 
+    const AuthorizationToken = req.headers['authorization']
+
+    var token = undefined
+    if(AuthorizationToken){
+        token = AuthorizationToken.split(' ')[1]
+    }
+
+    if(!token) {
         res.status(401)
         res.json({})
+        return
     }
 
     jwt.verify(

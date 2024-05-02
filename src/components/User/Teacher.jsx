@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import JoinRoom from './ClassRoom/JoinRoom'
-import RoomViewer from './ClassRoom/RoomViewer/RoomViewer'
 import { Container, Row, Col } from 'react-bootstrap'
+import NewRoom from '../Room/NewRoom'
+import RoomViewer from '../Room/RoomViewer/RoomViewer'
 
-function Student() {
+function Teacher() {
 
     const [roomRefresh, setRoomRefresh] = useState()
 
     return (
         <>
             <Container>
-                <Row style={{padding: '20px'}}>
+                <Row style={{ padding: '20px' }}>
                     <Col>
-                        <JoinRoom roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
+                        <NewRoom roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
-                    <Col>
+                    <Col style={{ display: 'flex' }}>
                         <RoomViewer roomRefresh={roomRefresh} setRoomRefresh={setRoomRefresh} />
                     </Col>
                 </Row>
@@ -23,4 +23,4 @@ function Student() {
     )
 }
 
-export default Student
+export default Teacher

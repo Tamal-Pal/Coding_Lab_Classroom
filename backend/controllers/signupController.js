@@ -2,10 +2,12 @@ const database = require('../models/database')
 
 module.exports = async (req, res) => {
     const { user, pwd, fullname, role } = req.body;
-    if(!user || !pwd || !fullname || !role) 
-        return res.status(400).json({ 
+    if(!user || !pwd || !fullname || !role) {
+        res.status(400).json({ 
             'message': 'email id, password, fullname and role are required.'
         })
+        return
+    }
 
     try{
         const result = await database.newUser(user, pwd, fullname, role);

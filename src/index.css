@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    min-height: 100vh;
+    max-width: 100vw !important;
     background-color: #41C9E2;
 }
 

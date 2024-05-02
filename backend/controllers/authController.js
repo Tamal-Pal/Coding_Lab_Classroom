@@ -4,7 +4,7 @@ const database = require('../models/database')
 const jwt = require('jsonwebtoken')
 // const fsPromises = require('fs').promises
 const path = require('path')
-const Time = require('../config/Time')
+const Time = require('../utils/Time')
 
 // var activeUsers = require('../models/activeUsers.json')
 
@@ -20,17 +20,15 @@ const handleLogin = async (req, res) => {
             if(response.status === 'VALID_USER'){
                 // create JWTs
                 const { user_id, fullname } = response
-                const accessToken = jwt.sign(
+                const token = jwt.sign(
                     { user_id },
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 )
-                res.cookie('jwt', accessToken, {
-                    httpOnly: true,
-                    secure: true,
+                res.cookie('jwt', token, {
                     maxAge: 1000 * 60 * 60 * 24
                 })
-                res.json({ user, user_id, fullname })
+                res.json({ user, user_id, fullname, token })
             } else if(response.status === 'INCORRECT_PASSWORD'){
                 res.status(401).json({ 'status': response.status })
             }

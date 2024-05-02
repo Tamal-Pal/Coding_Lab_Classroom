@@ -1,14 +1,13 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
 import './Footer.css'
 
 function Footer() {
     return (
-        <Container className='footer-container'>
-            <footer className="py-3 my-4">
-                <p className="text-center text-muted">Made with Love<hr />Students of AEC</p>
+        <div className='footer-container'>
+            <footer className="py-3">
+                <p className="text-center text-muted">Made with <i className="bi bi-heart"></i><br />Students of AEC</p>
             </footer>
-        </Container>
+        </div>
     )
 }
 

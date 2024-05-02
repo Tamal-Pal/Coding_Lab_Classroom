@@ -3,7 +3,9 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Signup.css'
 import { SIGNUP_URL } from '../../config/URL';
-import { FULLNAME_REGEX, USER_REGEX, PWD_REGEX } from '../../config/REGEX';
+import customFetch from '../../api/customFetch';
+import { FULLNAME_REGEX, USER_NAME_REGEX, PWD_REGEX } from '../../config/REGEX';
+>>>>>>> editor-and-communication
 
 function Signup() {
 
@@ -44,7 +46,7 @@ function Signup() {
     }, [fullname]);
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
+        const result = USER_NAME_REGEX.test(user);
         // console.log(result);
         // console.log(user);
         setValidName(result);
@@ -75,7 +77,7 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const v1 = USER_REGEX.test(user)
+        const v1 = USER_NAME_REGEX.test(user)
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
@@ -83,13 +85,11 @@ function Signup() {
         }
 
         try {
-            const response = await fetch(SIGNUP_URL, {
+            const response = await customFetch(SIGNUP_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({ fullname: fullname, user: user, role: role, pwd: pwd })
             })
+            // console.log(response.status)
 
             if(response.status === 200 || response.status === 201){
                 setSuccess(true)

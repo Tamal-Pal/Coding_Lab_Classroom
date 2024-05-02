@@ -5,18 +5,25 @@ import { useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/useAuth'
 import { LOGOUT_URL } from '../../config/URL'
+import customFetch from '../../api/customFetch'
+import useSocket from '../../hooks/useSocket'
 
 const NavigationBar = () => {
     const navigate = useNavigate()
 
     const { auth, setAuth } = useAuth()
+    const { socket, setSocket } = useSocket()
 
     const handleLogout = async () => {
-        await fetch(LOGOUT_URL, {
+        await customFetch(LOGOUT_URL, {
             method: 'DELETE',
-            credentials: 'include'
+            token: localStorage.getItem('token')
         })
+        socket.disconnect()
+        setSocket({})
+        localStorage.removeItem('token')
         setAuth({})
+        navigate('/')
     }
 
     const goHome = () => {

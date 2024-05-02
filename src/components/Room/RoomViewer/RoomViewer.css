@@ -1,0 +1,17 @@
+/* .room-viewer {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 500px;
+} */
+
+.copy-button {
+    margin-top: 10px;
+}
+
+.card {
+    padding: 0;
+}
+
+.clipboard-icon {
+    padding-left: 15px;
+}

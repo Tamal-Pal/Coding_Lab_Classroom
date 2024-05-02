@@ -6,15 +6,18 @@ import { AuthProvider } from "./context/AuthProvider.jsx";
 // import Footer from "./components/Footer/Footer.js";
 import App from "./App.jsx"
 import './index.css'
+import { SocketProvider } from "./context/SocketProvider.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <>
         <BrowserRouter>
             <AuthProvider>
-                <Routes>
-                    <Route path="/*" element={<App />} />
-                </Routes>
+                <SocketProvider>
+                    <Routes>
+                        <Route path="/*" element={<App />} />
+                    </Routes>
+                </SocketProvider>
             </AuthProvider>
         </BrowserRouter>
     </>
