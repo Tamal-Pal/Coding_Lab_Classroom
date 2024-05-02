@@ -33,7 +33,7 @@ const NavigationBar = () => {
     return (
         <Navbar className="navigation-bar">
             <Container>
-                <Navbar.Brand onClick={goHome} style={{'cursor': 'pointer'}}>Coding Classroom</Navbar.Brand>
+                <Navbar.Brand onClick={goHome} style={{'cursor': 'pointer', 'fontSize': '22px'}}>Coding Classroom</Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>

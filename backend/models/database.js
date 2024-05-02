@@ -186,8 +186,11 @@ const getStudent = async (user_id) => {
 module.exports.getStudent = getStudent
 
 const getRoomData = async (room_id) => {
-    const [[result]] = await pool.query(`select room_name, question, language from room_admin
-    where room_id=?`, [room_id])
+    const [[result]] = await pool.query(`
+    SELECT r.room_id, r.admin_id, r.room_name, r.room_creation_time, r.question, r.language, u.user AS admin_username, u.fullname
+    FROM room_admin r
+    INNER JOIN users u ON r.admin_id = u.user_id
+    WHERE r.room_id = ?;`, [room_id])
     // console.log(result)
 
     return result

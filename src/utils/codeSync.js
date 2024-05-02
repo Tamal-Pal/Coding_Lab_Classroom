@@ -20,8 +20,8 @@ const checkFromBack = (a, b) => {
 }
 
 module.exports.generateChange = (a, b) => {
-    console.log('a', a)
-    console.log('b', b)
+    // console.log('a', a)
+    // console.log('b', b)
     var front = checkFromFront(a, b);
     if(front === b.length) return [front, 0, ""]; //Means no change
     a = a?.slice(front)

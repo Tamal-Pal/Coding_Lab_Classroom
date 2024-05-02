@@ -56,7 +56,7 @@ const NewRoom = ({ setRoomRefresh }) => {
 
                 <div className='form-group'>
                     <label>Language</label>
-                    <select multiple className="form-control">
+                    <select style={{'height': '150px'}} multiple className="form-control">
                     {
                         languages.map((lang, i) => {
                             return (<option key={i} onClick={() => setLanguage(lang)}>{lang}</option>)

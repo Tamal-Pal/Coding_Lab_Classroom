@@ -5,7 +5,7 @@ import './Chat.css'
 import Messages from "./Messages"
 import useRole from '../../../hooks/useRole'
 
-const Chat = ({ className, student_id }) => {
+const Chat = ({ className, student_id, roomData, availability }) => {
 
     const [studentName, setStudentName] = useState(student_id)
     const role = useRole()
@@ -19,10 +19,11 @@ const Chat = ({ className, student_id }) => {
         ['teacher', 'message four'],
     ])
 
-    const sendMessage = async () => {
+    const sendMessage = async (e) => {
+        e.preventDefault()
         const msg = newMessage.current.value
 
-        if(msg){
+        if (msg) {
             setMessages(prev => [...prev, [role, msg]])
             newMessage.current.value = ''
         }
@@ -46,10 +47,13 @@ const Chat = ({ className, student_id }) => {
 
     return <div className={`${className} chat`}>
         <h5 className="chat-header">
+            <span className={`circle ${availability}`} />
             {
                 studentName
                     ? (<>{studentName}</>)
-                    : (<>Chat Window</>)
+                    : role === 'student' ?
+                        (<>{roomData.fullname}</>)
+                        : (<>Chat Window</>)
             }
         </h5>
         <hr />

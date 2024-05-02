@@ -5,6 +5,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { getRole } = require("./utils/roles");
 const { CONNECTION, JOIN, LEAVE, CODE_CHANGE } = require("./config/SocketEvent");
+const database = require('./models/database');
+const helloWorld = require("./utils/helloWorld");
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -14,12 +16,20 @@ const PORT = process.env.REACT_APP_SOCKET_SERVER_PORT || 3002;
 const userSocketMap = {};
 const notebookContent = {};
 
-const notebookObject = {
-    code: '',
-    input: '',
-    messages: [],
-    studentIsActive: false,
-    teacherIsActive: false
+const notebookObject = async (notebook) => {
+
+    const room_id = notebook.split('_')[0]
+    const roomData = await database.getRoomData(room_id)
+    const { language } = roomData
+
+    return {
+        language: language,
+        code: helloWorld(language),
+        input: '',
+        messages: [],
+        studentIsActive: false,
+        teacherIsActive: false
+    }
 };
 
 // notebookContent {
@@ -27,15 +37,15 @@ const notebookObject = {
 // }
 
 io.on(CONNECTION, (socket) => {
-    console.log(`User connected: ${socket.id}`);
     const { user_id } = socket.request._query;
     userSocketMap[socket.id] = user_id;
+    console.log(`User connected: ${socket.id} ${user_id}`);
 
-    socket.on(JOIN, ({ notebook, user_id }) => {
+    socket.on(JOIN, async ({ notebook, user_id }) => {
         console.log('join', notebook, user_id);
 
         if (!notebookContent[notebook]) {
-            notebookContent[notebook] = notebookObject;
+            notebookContent[notebook] = await notebookObject(notebook);
         }
 
         const role = getRole(user_id);
@@ -58,10 +68,9 @@ io.on(CONNECTION, (socket) => {
         socket.leave(notebook)
     })
 
-    socket.on(CODE_CHANGE, ({ notebook, code, change }) => {
-        console.log(change);
+    socket.on(CODE_CHANGE, ({ notebook, code }) => {
 
-        if(notebookContent[notebook]['studentIsActive']){
+        if (notebookContent[notebook]['studentIsActive']) {
             notebookContent[notebook]['code'] = code;
             socket.in(notebook).emit("code-change", { code });
         }
@@ -70,13 +79,24 @@ io.on(CONNECTION, (socket) => {
         io.to(socketId).emit("code-change", { code });
     });
 
+    socket.on('get-availability', ({ notebook }) => {
+        const studentIsActive = notebookContent[notebook]?.studentIsActive
+        const teacherIsActive = notebookContent[notebook]?.teacherIsActive
+        socket.emit('get-availability', { studentIsActive, teacherIsActive })
+    })
+
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
+        const user_id = userSocketMap[socket.id]
+        const role = getRole(user_id)
         rooms.forEach((notebook) => {
-            socket.in(notebook).emit('disconnected', {
-                socketId: socket.id,
-                user_id: userSocketMap[socket.id],
-            });
+            // socket.in(notebook).emit('disconnected', {
+            //     socketId: socket.id,
+            //     user_id: userSocketMap[socket.id],
+            // });
+            try{
+                notebookContent[notebook][`${role}IsActive`] = false
+            } catch {}
         });
         delete userSocketMap[socket.id];
         socket.leave();

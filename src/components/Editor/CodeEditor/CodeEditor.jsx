@@ -5,26 +5,23 @@ import { vscodeDark } from '@uiw/codemirror-themes-all'
 import useNotebookId from '../../../hooks/useNotebookId'
 import { CODE_CHANGE } from '../../../config/SocketEvent'
 import useRole from '../../../hooks/useRole'
-import { generateChange } from '../../../utils/codeSync'
+// import { generateChange } from '../../../utils/codeSync'
 
-const CodeEditor = ({ className, roomData, socket }) => {
+const CodeEditor = ({ className, roomData, socket, readOnly }) => {
 
     const [codeValue, setCodeValue] = useState()
     const notebook = useNotebookId()
     const role = useRole()
 
     const codeChange = useCallback((changedCodeVal, viewUpdate) => {
-    
-        console.log('code value', codeValue)
-        var change = generateChange(codeValue, changedCodeVal);
-        console.log('outside function', change)
+        // var change = generateChange(codeValue, changedCodeVal);
         setCodeValue(changedCodeVal);
-        socket.emit(CODE_CHANGE, { notebook, code: changedCodeVal, role, change })
+        socket.emit(CODE_CHANGE, { notebook, code: changedCodeVal, role })
     }, [notebook, socket, role]);
 
     useEffect(() => {
 
-        if(socket){
+        if (socket) {
             socket.on(CODE_CHANGE, ({ code }) => {
                 setCodeValue(code)
             })
@@ -42,6 +39,7 @@ const CodeEditor = ({ className, roomData, socket }) => {
                 extensions={[javascript({ jsx: true })]}
                 theme={vscodeDark}
                 onChange={codeChange}
+                readOnly={readOnly}
             />
         </div>
     </div>

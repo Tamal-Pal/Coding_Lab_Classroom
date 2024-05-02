@@ -1,4 +1,5 @@
-.io, .code {
+.io,
+.code {
     display: flex;
     flex-direction: column;
 }
@@ -7,39 +8,6 @@
     flex: 1;
 }
 
-.col-md-1 {
-    padding: 0px;
-}
-.col-md-2 {
-    padding: 0px;
-}
-.col-md-3 {
-    padding: 0px;
-}
-.col-md-4 {
-    padding: 0px;
-}
-.col-md-5 {
-    padding: 0px;
-}
-.col-md-6 {
-    padding: 0px;
-}
-.col-md-7 {
-    padding: 0px;
-}
-.col-md-8 {
-    padding: 0px;
-}
-.col-md-9 {
-    padding: 0px;
-}
-.col-md-10 {
-    padding: 0px;
-}
-.col-md-11 {
-    padding: 0px;
-}
-.col-md-12 {
+[class^="col-md-"] {
     padding: 0px;
 }

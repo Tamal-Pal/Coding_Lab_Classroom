@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "devApi": "nodemon --watch ./backend ./backend/apiServer.js",
+    "devApi": "nodemon --ignore ./backend/socketServer --watch ./backend ./backend/apiServer.js",
     "devSocket": "nodemon --watch ./backend ./backend/socketServer.js",
     "api": "node ./backend/apiServer.js",
     "socket": "node ./backend/socketServer.js",

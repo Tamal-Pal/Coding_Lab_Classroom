@@ -38,6 +38,9 @@ const Refresh = () => {
         }
         refresh()
 
+    }, [setAuth, setSocket])
+
+    useEffect(() => {
         return () => {
 
             try{
@@ -49,8 +52,7 @@ const Refresh = () => {
                 console.error('ERROR: Cannot Disconnect Socket', e)
             }
         }
-
-    }, [setAuth, setSocket])
+    }, [socket])
 
     return (
         <Outlet />
