@@ -5,7 +5,6 @@ import './Signup.css'
 import { SIGNUP_URL } from '../../config/URL';
 import customFetch from '../../api/customFetch';
 import { FULLNAME_REGEX, USER_NAME_REGEX, PWD_REGEX } from '../../config/REGEX';
->>>>>>> editor-and-communication
 
 function Signup() {
 
