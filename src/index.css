@@ -27,6 +27,13 @@ body {
     color: white;
 }
 
+.unread {
+    background: radial-gradient(wheat 60%, #FFA07A 100%);
+}
+.unread:hover {
+    background: radial-gradient(#C6D8D5 100%, rgb(160, 158, 158) 0%);
+}
+
 ::-webkit-scrollbar {
     width: 6px;
 }

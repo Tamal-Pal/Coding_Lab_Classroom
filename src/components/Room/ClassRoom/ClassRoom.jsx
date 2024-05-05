@@ -5,16 +5,22 @@ import { GET_ROOM_DATA_URL, GET_STUDENTS_URL } from '../../../config/URL'
 import StudentCard from '../StudentCard/StudentCard'
 import customFetch from '../../../api/customFetch'
 import './ClassRoom.css'
+import useSocket from '../../../hooks/useSocket'
+import useRole from '../../../hooks/useRole'
 
 const ClassRoom = () => {
 
     const [students, setStudents] = useState([])
+    const [pendingStudents, setPendingStudents] = useState([])
     const [roomName, setRoomName] = useState(null)
     const [question, setQuestion] = useState(null)
     const [language, setLanguage] = useState(null)
 
     const query = useQuery()
     const room_id = query.get('room_id')
+    const role = useRole()
+
+    const { socket } = useSocket()
 
     useEffect(() => {
 
@@ -50,6 +56,24 @@ const ClassRoom = () => {
         }
     }, [room_id])
 
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            socket.emit('pending-in-room', { room: room_id, role })
+        }, 3000)
+
+        socket?.on('pending-in-room', (pendingNotebooks) => {
+            const ps = []
+            pendingNotebooks.map(notebook => {
+                ps.push(notebook.split('_')[1])
+            })
+
+            setPendingStudents(ps)
+        })
+        return () => {
+            clearInterval(intervalID)
+        }
+    }, [room_id, socket, role])
+
     return (
         <>
             <Container>
@@ -59,8 +83,12 @@ const ClassRoom = () => {
                 <p>{language}</p>
                 <div className='classroom-container'>
                     {
-                        students.map((student, i) => {
-                            return <StudentCard key={i} student={student} />
+                        students?.map((student, i) => {
+                            return <StudentCard 
+                                key={i} 
+                                student={student} 
+                                pending={pendingStudents.includes(student.student_id)}
+                            />
                         })
                     }
                 </div>

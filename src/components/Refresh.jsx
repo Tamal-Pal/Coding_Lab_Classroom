@@ -44,9 +44,9 @@ const Refresh = () => {
         return () => {
 
             try{
-                socket?.disconnect()
+                // socket?.disconnect()
                 // socket?.off(SocketEvent.JOINED)
-                socket?.off(SocketEvent.DISCONNECTED)
+                // socket?.off(SocketEvent.DISCONNECTED)
             }
             catch(e) {
                 console.error('ERROR: Cannot Disconnect Socket', e)

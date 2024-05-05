@@ -21,7 +21,7 @@ const NavigationBar = () => {
         })
         socket.disconnect()
         setSocket({})
-        localStorage.removeItem('token')
+        localStorage.clear()
         setAuth({})
         navigate('/')
     }

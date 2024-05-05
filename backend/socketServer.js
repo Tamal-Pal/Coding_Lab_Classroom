@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
-const { getRole } = require("./utils/roles");
+const { getRole, getOppositeRole } = require("./utils/roles");
 const { CONNECTION, JOIN, LEAVE, CODE_CHANGE } = require("./config/SocketEvent");
 const database = require('./models/database');
 const helloWorld = require("./utils/helloWorld");
@@ -28,10 +28,47 @@ const notebookObject = async (notebook) => {
         input: '',
         messages: [],
         studentIsActive: false,
-        teacherIsActive: false
+        teacherIsActive: false,
+        studentPendingMessages: [],
+        teacherPendingMessages: []
     }
 };
+const getPendingMessagesInRooms = ({ rooms, role }) => {
+    const keys = Object.keys(notebookContent)
+    const pendingRooms = []
 
+    rooms.map(room => {
+        keys.map(key => {
+            const r = key.split('_')[0]
+            if(room === r && notebookContent[key][`${role}PendingMessages`].length > 0){
+                pendingRooms.push(room)
+                return
+            }
+        })
+    })
+    // console.log('pending rooms', pendingRooms, 'being sent to', role)
+
+    return pendingRooms
+}
+const getPendingMessagesInRoom = ({ room, role }) => {
+    const keys = Object.keys(notebookContent)
+    const notebooks = []
+
+    keys.map(key => {
+        const r = key.split('_')[0]
+        if(r === room && notebookContent[key][`${role}PendingMessages`].length > 0){
+            notebooks.push(key)
+        }
+    })
+
+    return notebooks
+}
+const getAndClearPendingInNotebook = ({ notebook, role }) => {
+    const pendings = notebookContent[notebook][`${role}PendingMessages`]
+    notebookContent[notebook][`${role}PendingMessages`] = []
+
+    return pendings
+}
 // notebookContent {
 //     notebook: notebookObject
 // }
@@ -53,6 +90,11 @@ io.on(CONNECTION, (socket) => {
             notebookContent[notebook][`${role}IsActive`] = true;
         }
         else return;
+
+        const pendingMessages = getAndClearPendingInNotebook({ notebook, role })
+        pendingMessages.map(message => {
+            socket.emit('message', { message })
+        })
         socket.join(notebook);
         socket.emit(CODE_CHANGE, { code: notebookContent[notebook]['code'] })
     });
@@ -85,6 +127,38 @@ io.on(CONNECTION, (socket) => {
         socket.emit('get-availability', { studentIsActive, teacherIsActive })
     })
 
+    socket.on('message', ({ msg, notebook, role }) => {
+        console.log(1, 'message', { msg, notebook, role })
+
+        const oppositeRole = getOppositeRole(role)
+        if(notebookContent[notebook][`${oppositeRole}IsActive`]){
+            socket.in(notebook).emit('message', { message: msg })
+            return
+        }
+
+        notebookContent[notebook][`${oppositeRole}PendingMessages`].push(msg)
+    })
+
+    socket.on('pending-in-rooms', ({ rooms, role }) => {
+        var pendingRooms = []
+        if(rooms && role) {
+            pendingRooms = getPendingMessagesInRooms({ rooms, role })
+        }
+        console.log('notebook content', notebookContent)
+        console.log('pending rooms', pendingRooms, 'being sent to', role)
+        socket.emit('pending-in-rooms', ({ pendingRooms }))
+    })
+
+    socket.on('pending-in-room', ({ room, role }) => {
+        const pendingNotebooks = getPendingMessagesInRoom({ room, role })
+        socket.emit('pending-in-room', pendingNotebooks)
+    })
+
+    socket.on('pending-in-notebook', ({ notebook, role }) => {
+        const pendings = getAndClearPendingInNotebook({ notebook, role })
+        socket.emit('pending-in-notebook', ({ pendings }))
+    })
+
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         const user_id = userSocketMap[socket.id]
@@ -101,7 +175,7 @@ io.on(CONNECTION, (socket) => {
         delete userSocketMap[socket.id];
         socket.leave();
         console.log(`User disconnected: ${socket.id}`);
-    });
-});
+    })
+})
 
 server.listen(PORT, () => console.log(`Socket Server Is Running on PORT ${PORT}`));

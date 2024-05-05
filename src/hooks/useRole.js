@@ -12,3 +12,10 @@ const useRole = () => {
 }
 
 export default useRole
+
+export const oppositeRole = (role) => {
+    if(role === 'teacher') return 'student'
+    if(role === 'student') return 'teacher'
+
+    return undefined
+}

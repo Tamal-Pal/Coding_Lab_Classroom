@@ -5,7 +5,7 @@ import useAuth from '../../../hooks/useAuth'
 import { TCH_REGEX, STU_REGEX } from '../../../config/REGEX'
 import { isTeacher } from '../../../config/User'
 
-const RoomCard = ({ room_name, room_id, room_admin }) => {
+const RoomCard = ({ room_name, room_id, room_admin, pending }) => {
 
     const { auth } = useAuth()
     const { user_id } = auth
@@ -42,7 +42,11 @@ const RoomCard = ({ room_name, room_id, room_admin }) => {
     return (
         <>
             <Card>
-                <Card.Body onClick={handleBodyClick}>
+                <Card.Body 
+                    onClick={handleBodyClick} 
+                    id={room_id}
+                    className={pending ? 'unread': 'read'}
+                >
                     <Card.Title>
                         {room_name && <Card.Title>Room Name: {room_name}</Card.Title>}
                     </Card.Title>

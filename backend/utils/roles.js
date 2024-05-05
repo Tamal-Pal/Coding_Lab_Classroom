@@ -21,3 +21,9 @@ module.exports.isStudent = (id) => {
 module.exports.isUser = (id) => {
     return USER_REGEX.test(id)
 }
+
+module.exports.getOppositeRole = (role) => {
+    if(role === 'student') return 'teacher'
+    if(role === 'teacher') return 'student'
+    return undefined
+}

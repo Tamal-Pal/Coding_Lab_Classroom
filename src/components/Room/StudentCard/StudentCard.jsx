@@ -3,7 +3,7 @@ import './StudentCard.css'
 import { useNavigate } from 'react-router-dom'
 import useQuery from '../../../hooks/useQuery'
 
-function StudentCard({ student }) {
+function StudentCard({ student, pending }) {
 
     const navigate = useNavigate()
     const query = useQuery()
@@ -16,7 +16,7 @@ function StudentCard({ student }) {
 
     return (
         <Card className='student-card' onClick={handleClick}>
-            <Card.Body>
+            <Card.Body className={pending ? 'unread' : 'read'}>
                 <Card.Title>{student_name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">{student_id}</Card.Subtitle>
             </Card.Body>

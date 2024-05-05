@@ -3,25 +3,35 @@ import { GET_STUDENT_URL } from "../../../config/URL"
 import customFetch from "../../../api/customFetch"
 import './Chat.css'
 import Messages from "./Messages"
-import useRole from '../../../hooks/useRole'
+import useRole, { oppositeRole } from '../../../hooks/useRole'
+import useSocket from '../../../hooks/useSocket'
+import useNotebookId from '../../../hooks/useNotebookId'
 
 const Chat = ({ className, student_id, roomData, availability }) => {
 
     const [studentName, setStudentName] = useState(student_id)
     const role = useRole()
+    const { socket } = useSocket()
+    const notebook = useNotebookId()
 
     const newMessage = useRef()
 
-    const [messages, setMessages] = useState([
-        ['teacher', 'message one'],
-        ['student', 'message two'],
-        ['student', 'message three'],
-        ['teacher', 'message four'],
-    ])
+    const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        try {
+            setMessages(JSON.parse(localStorage.getItem(`messages_${notebook}`) || '[]'))
+        } catch {
+            setMessages([])
+        }
+    }, [setMessages, notebook])
 
     const sendMessage = async (e) => {
         e.preventDefault()
         const msg = newMessage.current.value
+
+        socket.emit('message', { msg, notebook, role })
+        // console.log('sent message', msg)
 
         if (msg) {
             setMessages(prev => [...prev, [role, msg]])
@@ -44,6 +54,19 @@ const Chat = ({ className, student_id, roomData, availability }) => {
 
         student_id && getData()
     }, [student_id])
+
+    useEffect(() => {
+        socket?.on('message', ({ message }) => {
+            // console.log('message', message)
+            const receiver = oppositeRole(role)
+
+            setMessages(messages => [...messages, [receiver, message]])
+        })
+    }, [socket])
+
+    useEffect(() => {
+        localStorage.setItem(`messages_${notebook}`, JSON.stringify(messages))
+    }, [messages, notebook])
 
     return <div className={`${className} chat`}>
         <h5 className="chat-header">
