@@ -5,8 +5,10 @@ import { GET_ROOM_DATA_URL, GET_STUDENTS_URL } from '../../../config/URL'
 import StudentCard from '../StudentCard/StudentCard'
 import customFetch from '../../../api/customFetch'
 import './ClassRoom.css'
+import '../Room.css'
 import useSocket from '../../../hooks/useSocket'
 import useRole from '../../../hooks/useRole'
+import LangIcon from '../../../config/LangIcon/LangIcon'
 
 const ClassRoom = () => {
 
@@ -26,7 +28,7 @@ const ClassRoom = () => {
 
         try {
             const getRoomData = async () => {
-                const result = await customFetch(GET_ROOM_DATA_URL(room_id), { token: localStorage.getItem('token')})
+                const result = await customFetch(GET_ROOM_DATA_URL(room_id), { token: localStorage.getItem('token') })
                 if (result.status === 200) {
                     const data = await result.json()
                     setRoomName(data.room_name)
@@ -59,7 +61,7 @@ const ClassRoom = () => {
     useEffect(() => {
         const intervalID = setInterval(() => {
             socket.emit('pending-in-room', { room: room_id, role })
-        }, 3000)
+        }, 500)
 
         socket?.on('pending-in-room', (pendingNotebooks) => {
             const ps = []
@@ -78,15 +80,18 @@ const ClassRoom = () => {
         <>
             <Container>
                 <br />
-                <h3>{roomName}</h3>
-                <p>{question}</p>
-                <p>{language}</p>
+                <div className='text-white'>
+                    <h1>
+                        Classroom: <u>{roomName}</u>
+                    </h1>
+                    <h4>Question: <LangIcon lang={language} height={40}/> {question}</h4>
+                </div>
                 <div className='classroom-container'>
                     {
                         students?.map((student, i) => {
-                            return <StudentCard 
-                                key={i} 
-                                student={student} 
+                            return <StudentCard
+                                key={i}
+                                student={student}
                                 pending={pendingStudents.includes(student.student_id)}
                             />
                         })

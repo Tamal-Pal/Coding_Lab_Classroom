@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useId } from "react"
 import { GET_STUDENT_URL } from "../../../config/URL"
 import customFetch from "../../../api/customFetch"
 import './Chat.css'
@@ -13,6 +13,7 @@ const Chat = ({ className, student_id, roomData, availability }) => {
     const role = useRole()
     const { socket } = useSocket()
     const notebook = useNotebookId()
+    const id = useId()
 
     const newMessage = useRef()
 
@@ -26,8 +27,7 @@ const Chat = ({ className, student_id, roomData, availability }) => {
         }
     }, [setMessages, notebook])
 
-    const sendMessage = async (e) => {
-        e.preventDefault()
+    const sendMessage = async () => {
         const msg = newMessage.current.value
 
         socket.emit('message', { msg, notebook, role })
@@ -68,6 +68,20 @@ const Chat = ({ className, student_id, roomData, availability }) => {
         localStorage.setItem(`messages_${notebook}`, JSON.stringify(messages))
     }, [messages, notebook])
 
+    useEffect(() => {
+
+        const handleEnter = (e) => {
+            if(e.ctrlKey && e.key === 'Enter') {
+                sendMessage()
+            }
+        }
+        document.getElementById(`message-input-${id}`).addEventListener('keydown', handleEnter)
+
+        return () => {
+            document.getElementById(`message-input-${id}`)?.removeEventListener('keydown', handleEnter)
+        }
+    }, [id]);
+
     return <div className={`${className} chat`}>
         <h5 className="chat-header">
             <span className={`circle ${availability}`} />
@@ -88,7 +102,7 @@ const Chat = ({ className, student_id, roomData, availability }) => {
         <hr />
         <div className="new-message">
             <span>
-                <textarea ref={newMessage} className="message-input" rows={1} placeholder="Message" />
+                <textarea ref={newMessage} id={`message-input-${id}`} className="message-input" rows={1} placeholder="Message" />
                 <a className="send-message" onClick={sendMessage}>
                     <i className="bi bi-send-fill"></i>
                 </a>

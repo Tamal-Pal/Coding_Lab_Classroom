@@ -2,6 +2,7 @@
     margin-top: 10px solid transparent;
     border-radius: 0;
     background-color: #F7EEDD;
+    min-width: 200px;
 }
 
 .card-body:hover {
@@ -11,5 +12,4 @@
 
 .student-card {
     flex: 0 0 25%;
-    margin: 20px;
 }

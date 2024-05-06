@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card'
 import './StudentCard.css'
 import { useNavigate } from 'react-router-dom'
 import useQuery from '../../../hooks/useQuery'
+import Avatar from 'react-avatar'
 
 function StudentCard({ student, pending }) {
 
@@ -15,10 +16,12 @@ function StudentCard({ student, pending }) {
     }
 
     return (
-        <Card className='student-card' onClick={handleClick}>
+        <Card className='student-card text-center' onClick={handleClick}>
             <Card.Body className={pending ? 'unread' : 'read'}>
-                <Card.Title>{student_name}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{student_id}</Card.Subtitle>
+                <Avatar name={student_name} round={true}/>
+                <br /><br />
+                <Card.Title>Name: {student_name}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">ID: {student_id}</Card.Subtitle>
             </Card.Body>
         </Card>
     );

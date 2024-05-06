@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { JOIN_ROOM_URL } from '../../config/URL'
 import customFetch from '../../api/customFetch'
+import './Room.css'
 
 const JoinRoom = ({ setRoomRefresh }) => {
 
@@ -29,7 +30,7 @@ const JoinRoom = ({ setRoomRefresh }) => {
 
     return (
         <>
-            <div>Enter Room ID to Join Room</div>
+            <div className='text-white'>Enter Room ID to Join Room</div>
 
             <form>
                 <input

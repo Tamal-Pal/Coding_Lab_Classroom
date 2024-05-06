@@ -28,10 +28,13 @@ body {
 }
 
 .unread {
-    background: radial-gradient(wheat 60%, #FFA07A 100%);
+    background: radial-gradient(wheat 60%, #f45d43 100%);
 }
 .unread:hover {
     background: radial-gradient(#C6D8D5 100%, rgb(160, 158, 158) 0%);
+}
+.text-white {
+    color: wheat;
 }
 
 ::-webkit-scrollbar {

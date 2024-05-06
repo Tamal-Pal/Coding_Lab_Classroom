@@ -20,15 +20,15 @@ const Editor = () => {
     const role = useRole()
     const [availability, setAvailability] = useState('offline')
     const [roomData, setRoomData] = useState({
-        question: 'Loading...',
-        language: 'Loading...'
+        question: null,
+        language: null
     })
     const notebook = useNotebookId()
     const { auth } = useAuth()
     const roomDataNotFound = useMemo(() => {
         return {
-            question: 'Question Not Found',
-            language: 'Language Not Found'
+            question: undefined,
+            language: undefined
         }
     }, [])
 

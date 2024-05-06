@@ -5,6 +5,7 @@ import { vscodeDark } from '@uiw/codemirror-themes-all'
 import useNotebookId from '../../../hooks/useNotebookId'
 import { CODE_CHANGE } from '../../../config/SocketEvent'
 import useRole from '../../../hooks/useRole'
+import LangIcon from '../../../config/LangIcon/LangIcon'
 // import { generateChange } from '../../../utils/codeSync'
 
 const CodeEditor = ({ className, roomData, socket, readOnly }) => {
@@ -30,7 +31,10 @@ const CodeEditor = ({ className, roomData, socket, readOnly }) => {
     }, [socket])
 
     return <div className={`${className} code`}>
-        <div style={{ flex: 1 }}>{roomData.question}</div>
+        <div style={{ flex: 1, padding: '10px' }} className='text-white'>
+            <LangIcon lang={roomData.language} height={25} />&nbsp;
+            {roomData.question}
+        </div>
         <div style={{ flex: 4, flexGrow: 1 }}>
             <CodeMirror
                 className='code-editor'

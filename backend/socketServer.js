@@ -128,7 +128,7 @@ io.on(CONNECTION, (socket) => {
     })
 
     socket.on('message', ({ msg, notebook, role }) => {
-        console.log(1, 'message', { msg, notebook, role })
+        // console.log(1, 'message', { msg, notebook, role })
 
         const oppositeRole = getOppositeRole(role)
         if(notebookContent[notebook][`${oppositeRole}IsActive`]){
@@ -144,8 +144,8 @@ io.on(CONNECTION, (socket) => {
         if(rooms && role) {
             pendingRooms = getPendingMessagesInRooms({ rooms, role })
         }
-        console.log('notebook content', notebookContent)
-        console.log('pending rooms', pendingRooms, 'being sent to', role)
+        // console.log('notebook content', notebookContent)
+        // console.log('pending rooms', pendingRooms, 'being sent to', role)
         socket.emit('pending-in-rooms', ({ pendingRooms }))
     })
 

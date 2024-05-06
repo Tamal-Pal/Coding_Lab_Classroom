@@ -35,7 +35,7 @@ const RoomViewer = ({ roomRefresh }) => {
                 room_ids.push(room.room_id)
             })
             socket?.emit('pending-in-rooms', { rooms: room_ids, role })
-        }, 3000)
+        }, 500)
 
         socket?.on('pending-in-rooms', (data) => {
             if (JSON.stringify(pendingRooms) !== JSON.stringify(data.pendingRooms)) {

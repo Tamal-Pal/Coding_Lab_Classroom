@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { NEW_ROOM_URL } from '../../config/URL'
 import customFetch from '../../api/customFetch'
 import languages from '../../config/Languages'
+import './Room.css'
 
 const NewRoom = ({ setRoomRefresh }) => {
 
@@ -33,7 +34,7 @@ const NewRoom = ({ setRoomRefresh }) => {
 
     return (
         <>
-            <h4>New Room</h4>
+            <h4 className='text-white'>New Room</h4>
 
             <form>
                 <label>Room Name/Description</label>
