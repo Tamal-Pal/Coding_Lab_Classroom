@@ -8,9 +8,8 @@ import useRole from '../../../hooks/useRole'
 import LangIcon from '../../../config/LangIcon/LangIcon'
 // import { generateChange } from '../../../utils/codeSync'
 
-const CodeEditor = ({ className, roomData, socket, readOnly }) => {
+const CodeEditor = ({ className, roomData, socket, readOnly, codeValue, setCodeValue }) => {
 
-    const [codeValue, setCodeValue] = useState()
     const notebook = useNotebookId()
     const role = useRole()
 

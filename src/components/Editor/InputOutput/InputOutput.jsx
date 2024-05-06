@@ -1,14 +1,6 @@
-import React, { useRef } from 'react'
 import './InputOutput.css'
 
-const InputOutput = ({ className }) => {
-
-    const inputRef = useRef()
-    const outputRef = useRef()
-
-    const submitInput = () => {
-        console.log(inputRef.current.textContent)
-    }
+const InputOutput = ({ className, inputRef, outputRef, submitInput }) => {
 
     return (        
         <div className={`${className} io`} style={{ display: 'flex', flexDirection: 'column' }}>

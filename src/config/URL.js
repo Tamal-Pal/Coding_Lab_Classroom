@@ -12,6 +12,7 @@ module.exports = {
     GET_STUDENTS_URL: room_id => `${API_BASE_URL}/getstudents?room_id=${room_id}`,
     GET_STUDENT_URL: student_id => `${API_BASE_URL}/getstudent?user_id=${student_id}`,
     GET_ROOM_DATA_URL: room_id => `${API_BASE_URL}/roomdata?room_id=${room_id}`,
+    COMPILE_URL: `${API_BASE_URL}/compile`,
 
     SOCKET_SERVER_URL: SOCKET_SERVER_URL
 }
