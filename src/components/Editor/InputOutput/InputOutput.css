@@ -1,3 +1,38 @@
 .io {
-    background-color: #2E949E;
+    background-color: white;
+}
+
+.run-button-parent {
+    padding-left: 5px;
+    padding-right: 7px;
+}
+
+.run-button {
+    color: black;
+    text-decoration: none;
+    float: right;
+}
+
+.run-button:hover {
+    cursor: pointer;
+    color: greenyellow;
+}
+
+[contenteditable] {
+    outline: none;
+    /* This removes the default outline */
+}
+.input-parent{
+    padding: 5px;
+}
+.input {
+    height: 100%;
+}
+
+.output-parent{
+    padding: 5px;
+    background-color: rgb(250, 238, 228);
+}
+.output {
+    height: 100%;
 }
