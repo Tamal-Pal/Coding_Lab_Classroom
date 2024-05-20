@@ -1,13 +1,19 @@
 
+const cppCompiler = require('../utils/codes/cpp/compiler')
+const cCompiler = require('../utils/codes/c/compiler')
+const path = require('path')
+
 const handleCompilation = async (req, res) => {
     const { language, code, input } = req.body
 
     if (language && code) {
-        console.log('language', language)
-        console.log('code', code)
-        res.json({
-            'output': 'bingo'
-        })
+        if(language === 'cpp'){
+            const result = await cppCompiler({ code, input })
+            res.json(result)
+        } else if(language === 'c'){
+            const result = await cCompiler({ code, input })
+            res.json(result)
+        }
         return
     } else {
         res.json({

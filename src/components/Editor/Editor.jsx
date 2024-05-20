@@ -50,7 +50,7 @@ const Editor = () => {
 
                 setRoomData(roomDataNotFound)
             } catch (e) {
-                console.log(e)
+                console.error(e)
                 setRoomData(roomDataNotFound)
             }
         }
@@ -82,21 +82,40 @@ const Editor = () => {
 
 
     const submitInput = useCallback(async () => {
+        var input = ''
+
+        const { children } = inputRef.current
+        if(children.length > 0){
+            input = inputRef.current.textContent.split(children[0]?.textContent)[0]
+
+            for(var i=0; i<children?.length; i++) input += `\n${children[i++].textContent}`
+        } else {
+            input = inputRef.current.textContent
+        }
+
         const body = {
             language: roomData.language,
             code: codeValue,
-            input: inputRef.current.textContent
+            input: input
         }
         console.log(body)
 
-        const output = await customFetch(COMPILE_URL, {
+        const data = await customFetch(COMPILE_URL, {
             method: 'POST',
             body: JSON.stringify(body),
             token: localStorage.getItem('token')
-        }).then(res => res.json())
+        }).then(res => {
+            return res.json()
+        })
+   
+        const { output, error } = data
 
-        if(output?.output) {
-            outputRef.current.textContent = output.output
+        if(error) {
+            outputRef.current.textContent = error
+        } else if(output) {
+            outputRef.current.textContent = output
+        } else {
+            outputRef.current.textContent = 'neither output nor error is received'
         }
     }, [inputRef, codeValue, outputRef, roomData])
 
