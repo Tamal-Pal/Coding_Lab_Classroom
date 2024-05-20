@@ -8,9 +8,9 @@ const compiler = async ({ code, input }) => {
         output: null
     }
 
-    const fileaName = randomString.generate(10)
-    const sourceCodeFile = `${fileaName}.c`
-    const executable = `${fileaName}.exe`
+    const fileName = randomString.generate(10)
+    const sourceCodeFile = `${fileName}.c`
+    const executable = `${fileName}.exe`
     const compileCommand = `gcc ${sourceCodeFile} -o ${executable}`
     const runCommand = executable
 

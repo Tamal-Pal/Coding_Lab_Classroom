@@ -1,7 +1,7 @@
 
 const cppCompiler = require('../utils/codes/cpp/compiler')
 const cCompiler = require('../utils/codes/c/compiler')
-const path = require('path')
+const javaCompiler = require('../utils/codes/java/compiler')
 
 const handleCompilation = async (req, res) => {
     const { language, code, input } = req.body
@@ -13,6 +13,11 @@ const handleCompilation = async (req, res) => {
         } else if(language === 'c'){
             const result = await cCompiler({ code, input })
             res.json(result)
+        } else if(language === 'java'){
+            const result = await javaCompiler({ code, input })
+            res.json(result)
+        } else {
+            res.json({ error: 'Compiler Not Found' })
         }
         return
     } else {

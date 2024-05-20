@@ -15,6 +15,7 @@ import useRole from '../../hooks/useRole'
 const Editor = () => {
     const { socket } = useSocket()
     const [codeValue, setCodeValue] = useState()
+    const [compiling, setCompiling] = useState(false)
     const inputRef = useRef()
     const outputRef = useRef()
     const query = useQuery()
@@ -82,6 +83,7 @@ const Editor = () => {
 
 
     const submitInput = useCallback(async () => {
+        setCompiling(true)
         var input = ''
 
         const { children } = inputRef.current
@@ -117,7 +119,9 @@ const Editor = () => {
         } else {
             outputRef.current.textContent = 'neither output nor error is received'
         }
-    }, [inputRef, codeValue, outputRef, roomData])
+
+        setCompiling(false)
+    }, [inputRef, codeValue, outputRef, roomData, setCompiling])
 
     return (
         <>
@@ -143,6 +147,7 @@ const Editor = () => {
                     className='col-md-2 editor-child'
                     roomData={roomData}
                     submitInput={submitInput}
+                    compiling={compiling}
                 />
             </div>
         </>

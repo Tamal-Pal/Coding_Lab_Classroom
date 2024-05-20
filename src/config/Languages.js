@@ -1,1 +1,1 @@
-module.exports = ['c', 'cpp', 'java', 'javascript', 'python']
+module.exports = ['c', 'cpp', 'java']
