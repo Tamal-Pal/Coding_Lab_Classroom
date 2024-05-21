@@ -1,5 +1,5 @@
 import "./InputOutput.css";
-import { ClipLoader } from "react-spinners";
+import { PuffLoader } from "react-spinners";
 
 const InputOutput = ({
   className,
@@ -17,7 +17,7 @@ const InputOutput = ({
         <span>Input</span>
         {compiling ? (
           <div className="compiling">
-            <ClipLoader color="#36d7b7" size={20}/>
+            <PuffLoader color="#abff2e" size={20}/>
           </div>
         ) : (
           <a className="run-button" onClick={submitInput}>

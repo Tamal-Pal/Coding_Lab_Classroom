@@ -2,6 +2,8 @@
 const cppCompiler = require('../utils/codes/cpp/compiler')
 const cCompiler = require('../utils/codes/c/compiler')
 const javaCompiler = require('../utils/codes/java/compiler')
+const pythonCompiler = require('../utils/codes/python/compiler')
+const jsCompiler = require('../utils/codes/javascript/compiler')
 
 const handleCompilation = async (req, res) => {
     const { language, code, input } = req.body
@@ -15,6 +17,12 @@ const handleCompilation = async (req, res) => {
             res.json(result)
         } else if(language === 'java'){
             const result = await javaCompiler({ code, input })
+            res.json(result)
+        } else if(language === 'python') {
+            const result = await pythonCompiler({ code, input })
+            res.json(result)
+        } else if(language === 'javascript'){
+            const result = await jsCompiler({ code, input })
             res.json(result)
         } else {
             res.json({ error: 'Compiler Not Found' })
