@@ -109,7 +109,7 @@ const Editor = () => {
         }).then(res => {
             return res.json()
         })
-   
+
         const { output, error } = data
 
         if(error) {

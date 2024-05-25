@@ -33,6 +33,7 @@ const notebookObject = async (notebook) => {
         teacherPendingMessages: []
     }
 };
+
 const getPendingMessagesInRooms = ({ rooms, role }) => {
     const keys = Object.keys(notebookContent)
     const pendingRooms = []

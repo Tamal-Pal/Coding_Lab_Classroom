@@ -5,7 +5,7 @@ const randomString = require('randomstring');
 const compiler = async ({ code, input }) => {
     const result = {
         error: null,
-        output: 'output from cpp compiler'
+        output: null
     }
 
     const fileName = randomString.generate(10)
