@@ -1,5 +1,5 @@
 .io {
-    background-color: white;
+    color: white;
     height: 100%;
 }
 
@@ -30,6 +30,7 @@
 .input-parent{
     padding: 5px;
     min-height: 0;
+    background-color: #757687;
 }
 .input {
     height: 100%;
@@ -38,7 +39,7 @@
 
 .output-parent{
     padding: 5px;
-    background-color: rgb(250, 238, 228);
+    background-color: #4d362dd3;
     min-height: 0;
 }
 .output {

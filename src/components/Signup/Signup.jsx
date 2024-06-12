@@ -112,7 +112,7 @@ function Signup() {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href='/login'>Sign In</a>
+                        <a href='/'>Sign In</a>
                         <br />
                         <a href='/signup'>Sign Up</a>
                     </p>

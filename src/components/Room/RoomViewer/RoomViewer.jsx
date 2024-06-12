@@ -22,7 +22,7 @@ const RoomViewer = ({ roomRefresh }) => {
             }).then(res => res.json())
             setRooms(result)
 
-            console.log('fetched rooms result', result)
+            // console.log('fetched rooms result', result)
         }
 
         fetchRooms()
@@ -52,8 +52,8 @@ const RoomViewer = ({ roomRefresh }) => {
 
         <Container className='room-viewer overflow-auto flex-grow'>
             {
-                rooms?.map(({ room_name, room_id, room_admin }, i) => {
-                    console.log('mapping rooms', rooms)
+                Array.isArray(rooms) && rooms?.map(({ room_name, room_id, room_admin }, i) => {
+                    // console.log('mapping rooms', rooms)
 
                     return <RoomCard
                         key={i}

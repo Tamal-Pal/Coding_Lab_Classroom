@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
-import { vscodeDark } from '@uiw/codemirror-themes-all'
+import { vscodeDark, abcdef, bbedit, tokyoNight as editorTheme } from '@uiw/codemirror-themes-all'
 import useNotebookId from '../../../hooks/useNotebookId'
 import { CODE_CHANGE } from '../../../config/SocketEvent'
 import useRole from '../../../hooks/useRole'
@@ -40,7 +40,7 @@ const CodeEditor = ({ className, roomData, socket, readOnly, codeValue, setCodeV
                 height='450px'
                 value={codeValue}
                 extensions={[javascript({ jsx: true })]}
-                theme={vscodeDark}
+                theme={editorTheme}
                 onChange={codeChange}
                 readOnly={readOnly}
             />

@@ -73,7 +73,9 @@ const getStudent = async (req, res) => {
     if (req.user_id[0] != 'T') return res.sendStatus(401)
 
     const data = await database.getStudent(user_id)
-    res.json(data)
+    
+    if(data) res.json(data)
+    else res.sendStatus(404)
 }
 
 const getRoomData = async (req, res) => {

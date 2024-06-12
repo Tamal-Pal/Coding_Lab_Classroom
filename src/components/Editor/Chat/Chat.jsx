@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useId } from "react"
+import { useNavigate } from "react-router-dom"
 import { GET_STUDENT_URL } from "../../../config/URL"
 import customFetch from "../../../api/customFetch"
 import './Chat.css'
@@ -14,6 +15,7 @@ const Chat = ({ className, student_id, roomData, availability }) => {
     const { socket } = useSocket()
     const notebook = useNotebookId()
     const id = useId()
+    const navigate = useNavigate()
 
     const newMessage = useRef()
 
@@ -41,11 +43,17 @@ const Chat = ({ className, student_id, roomData, availability }) => {
 
     useEffect(() => {
         const getData = async () => {
+            console.log('yo')
             const data = await customFetch(GET_STUDENT_URL(student_id), {
                 token: localStorage.getItem('token')
-            }).then(res => {
+            }).then(async (res) => {
+                console.log(res)
                 if (res.status === 200) {
-                    return res.json()
+                    const r = await res.json()
+                    return r
+                }
+                else if(res.status === 404) {
+                    navigate('*')
                 }
                 else return undefined
             })

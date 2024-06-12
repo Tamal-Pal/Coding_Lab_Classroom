@@ -25,7 +25,8 @@ const compiler = async ({ code, input }) => {
 
         result.output = output.toString()
     } catch(e) {
-        result.error = e?.output?.toString() || 'cannot compile'
+        result.error = true
+        result.output = e?.output?.toString() || 'cannot compile'
     }
     
     process.chdir('..')

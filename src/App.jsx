@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import Signup from "./components/Signup/Signup";
 import Layout from './components/Layout/Layout'
@@ -24,9 +23,7 @@ function App() {
                         <Route path="editor" element={<Editor />} />
                     </Route>
                 </Route>
-                <Route path="login" element={<Login />} />
                 <Route path="signup" element={<Signup />} />
-
 
                 { /* Catch All */}
                 <Route path="*" element={<NotFound />} />
