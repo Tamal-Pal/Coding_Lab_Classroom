@@ -36,6 +36,11 @@ const handleCompilation = async (req, res) => {
         res.json(result);
         return;
     }
+
+    res.json({
+      error: true,
+      output: 'invalid user'
+    })
   }
 
   res.json({

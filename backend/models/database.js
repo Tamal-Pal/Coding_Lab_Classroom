@@ -223,8 +223,8 @@ const validNotebook = async (notebook) => {
 };
 
 const validRoomAdmin = async ({ room_id, teacher_id }) => {
-  const valid = await pool.query(
-    "select exists( select 1 from room_admins where room_id=? and admin_id=?) as valid",
+  const [valid] = await pool.query(
+    "select exists( select 1 from room_admin where room_id=? and admin_id=?) as valid",
     [room_id, teacher_id]
   );
 
