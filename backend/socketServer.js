@@ -197,13 +197,11 @@ io.on(CONNECTION, (socket) => {
 
 process.on('SIGINT', () => {
   console.log('closing socket')
-  console.log('notebook content', notebookContent)
-
-  console.log('nc string', JSON.stringify(notebookContent, null, 2))
   fs.writeFileSync(path.join(__dirname, 'utils', 'notebookContent.json'), JSON.stringify(notebookContent, null, 2))
   server.close(() => {
     process.exit(0)
   })
+  console.log('socket closed')
 })
 
 server.listen(PORT, () =>
