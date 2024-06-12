@@ -1,7 +1,7 @@
 # Starting the project
 
-Open three terminals
-commands in each terminal:
+Open three terminals\n
+Commands in each terminal:
 - npm run socket
 - npm run api
 - npm start
